@@ -10,10 +10,10 @@ var ChannelsSchema = new Schema({
         audioUrl: String
     })],
     audioEffects: {
-        volume: Number,
-        distortion: Number,
-        delay: Number,
-        reverb: Number,
+        volume: {type: Number, default: 1},
+        distortion: {type: Number, default: 0},
+        delay: {type: Number, default: 0},
+        reverb: {type: Number, default: 0},
     },
     cDate: {type: Date, default: Date.now()},
     lmDate: {type: Date, default: Date.now()},
