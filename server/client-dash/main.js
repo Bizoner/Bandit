@@ -1222,6 +1222,7 @@ var NewBandComponent = /** @class */ (function () {
     NewBandComponent.prototype.ngOnInit = function () {
     };
     NewBandComponent.prototype.onSubmit = function () {
+        var _this = this;
         var objReq = {
             name: this.name,
             description: this.description,
@@ -1230,12 +1231,16 @@ var NewBandComponent = /** @class */ (function () {
             file: this.file,
         };
         this.bandsService.createNewBand(objReq).subscribe(function (data) {
+            _this.goToPage(data);
         }, function (err) {
         });
         // const req = this.http.post<any>("https://shenkar-band-it.herokuapp.com/bands/createNewBand",objReq);
         // req.subscribe((data)=>{
         //     window.location.href = 'https://shenkar-band-it.herokuapp.com/bands/'+data._id
         // })
+    };
+    NewBandComponent.prototype.goToPage = function (data) {
+        window.location.href = 'https://shenkar-band-it.herokuapp.com/bands/' + data._id;
     };
     NewBandComponent.prototype.onFileChange = function (event) {
         var _this = this;
@@ -1534,7 +1539,7 @@ var RegisterComponent = /** @class */ (function () {
         }
         this.registerForm.value.file = this.file;
         this.register_s.register(JSON.stringify(this.registerForm.value))
-            .subscribe(function (data) { console.log(data); _this._router.navigate(['/index']); }, function (error) { return console.error(error); });
+            .subscribe(function (data) { console.log(data); _this.register_s.updateUserSuccessObj(data); _this._router.navigate(['/index']); }, function (error) { return console.error(error); });
     };
     RegisterComponent.prototype.onFileChange = function (event) {
         var _this = this;

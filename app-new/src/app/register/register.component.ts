@@ -37,7 +37,7 @@ export class RegisterComponent implements OnInit {
     this.registerForm.value.file = this.file;
     this.register_s.register(JSON.stringify(this.registerForm.value))
       .subscribe(
-        data=> { console.log(data); this._router.navigate(['/index']);},
+        data=> { console.log(data); this.register_s.updateUserSuccessObj(data);  this._router.navigate(['/index']);},
         error=> console.error(error)
       )
   }

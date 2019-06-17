@@ -24,10 +24,11 @@ function isAuthenticated(req,res,next) {
 }
 
 router.get('/getUserData',isAuthenticated, user_controller.getUserData);
-router.post('/register', cloudinary.uploadBase64Cloudinary, user_controller.addNewUser,passport.authenticate('local', { failureRedirect: '/login' }),
-    function(req, res) {
-        res.json(req.body.user);
-    });
+router.post('/register',
+    cloudinary.uploadBase64Cloudinary,
+    user_controller.addNewUser,
+    passport.authenticate('local', { failureRedirect: '/login' }),
+    user_controller.getUserData);
 router.post('/login', passport.authenticate('local'),user_controller.getUserData);
 
 module.exports = router;

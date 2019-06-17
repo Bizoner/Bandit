@@ -18,7 +18,7 @@ function addNewUser(req,res,next) {
     UsersModel.addNewUser(req.body,(err,user) => {
         if (err) throw new Error(err);
         BandsModel.registerPendingMember(user,(err,res) => {
-            req.body.user = user;
+            req.body.user = user.toObject();
             next();
         });
     })

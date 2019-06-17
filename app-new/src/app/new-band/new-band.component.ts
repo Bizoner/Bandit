@@ -32,7 +32,7 @@ export class NewBandComponent implements OnInit {
           file : this.file,
       };
       this.bandsService.createNewBand(objReq).subscribe((data) => {
-
+        this.goToPage(data);
       },(err) => {
 
       })
@@ -40,6 +40,10 @@ export class NewBandComponent implements OnInit {
       // req.subscribe((data)=>{
       //     window.location.href = 'https://shenkar-band-it.herokuapp.com/bands/'+data._id
       // })
+  }
+
+  goToPage(data) {
+    window.location.href = 'https://shenkar-band-it.herokuapp.com/bands/'+data._id
   }
 
   onFileChange(event) {

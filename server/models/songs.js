@@ -34,7 +34,6 @@ SongsSchema.statics.updateSong = function (updateObj,cb) {
         title: updateObj.title,
         lmDate: new Date(),
         bpm: updateObj.bpm,
-        length: updateObj.length,
         timeSignature: updateObj.timeSignature,
         key: updateObj.key
     };

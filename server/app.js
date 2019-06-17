@@ -6,7 +6,7 @@ var bodyParser = require('body-parser');
 var app = express();
 var cors = require("cors");
 const passport = require('passport');
-app.use(cors({credentials: true, origin: 'http://localhost:4200'}))
+app.use(cors({credentials: true, origin: 'http://localhost:3000'}))
 
 // Express Session
 app.use(session({
