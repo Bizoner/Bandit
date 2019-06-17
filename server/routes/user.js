@@ -28,7 +28,10 @@ router.post('/register',
     cloudinary.uploadBase64Cloudinary,
     user_controller.addNewUser,
     passport.authenticate('local', { failureRedirect: '/login' }),
-    user_controller.getUserData);
+    function(req, res) {
+        res.json(req.body.user);
+    });
+
 router.post('/login', passport.authenticate('local'),user_controller.getUserData);
 
 module.exports = router;
