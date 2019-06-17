@@ -29,7 +29,7 @@ export class RegisterService {
   }
 
   register(body:any){
-      return this.http.post('http://localhost:3003/users/register',body,{
+      return this.http.post('https://shenkar-band-it.herokuapp.com/users/register',body,{
         observe:'body',
         headers: new HttpHeaders().append('Content-Type' , 'application/json')
       });
@@ -43,7 +43,7 @@ export class RegisterService {
   }
 
   login(body:any){
-    return this.http.post('http://localhost:3003/users/login' ,body,{
+    return this.http.post('https://shenkar-band-it.herokuapp.com/users/login' ,body,{
       observe:'body',
       withCredentials:true,
       headers: new HttpHeaders().append('Content-Type' , 'application/json')
@@ -51,7 +51,7 @@ export class RegisterService {
   }
 
   user(){
-    return this.http.get('http://localhost:3003/users/getUserData',{
+    return this.http.get('https://shenkar-band-it.herokuapp.com/users/getUserData',{
       observe:'body',
       withCredentials:true,
       headers: new HttpHeaders().append('Content-Type' , 'application/json')

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {BandsService} from "../bands.service";
+import {PlayerService} from "../player.service";
 
 @Component({
   selector: 'app-studio',
@@ -10,7 +11,7 @@ import {BandsService} from "../bands.service";
 export class StudioComponent implements OnInit {
   exportedSongs: any = [];
   unexportedSongs: any = [];
-  constructor(private bandsService: BandsService) {
+  constructor(private bandsService: BandsService, private playerService: PlayerService) {
     this.bandsService.getAllSongs().subscribe((data) => {
       this.sortSongs(data);
     })
@@ -24,6 +25,13 @@ export class StudioComponent implements OnInit {
         this.unexportedSongs.push(song);
       }
     })
+  }
+
+  playSong(songId) {
+    const audioObj = {
+      songId
+    };
+    this.playerService.sendToPlayer(audioObj);
   }
 
   ngOnInit() {

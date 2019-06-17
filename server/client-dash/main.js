@@ -286,18 +286,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 /* harmony import */ var _bands_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../bands.service */ "./src/app/bands.service.ts");
+/* harmony import */ var _player_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../player.service */ "./src/app/player.service.ts");
+
 
 
 
 
 
 var BandComponent = /** @class */ (function () {
-    function BandComponent(http, route, router, bandsService) {
+    function BandComponent(http, route, router, bandsService, playerService) {
         var _this = this;
         this.http = http;
         this.route = route;
         this.router = router;
         this.bandsService = bandsService;
+        this.playerService = playerService;
         this.bandData = {};
         this.route.params.subscribe(function (params) {
             _this.bandId = params['id'];
@@ -319,6 +322,12 @@ var BandComponent = /** @class */ (function () {
     BandComponent.prototype.redirectToStudio = function (data) {
         window.location.href = 'https://shenkar-band-it.herokuapp.com/songstudio/?id=' + data._id;
     };
+    BandComponent.prototype.playSong = function (songId) {
+        var audioObj = {
+            songId: songId
+        };
+        this.playerService.sendToPlayer(audioObj);
+    };
     BandComponent.prototype.ngOnInit = function () {
     };
     BandComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
@@ -327,7 +336,7 @@ var BandComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./band.component.html */ "./src/app/band/band.component.html"),
             styles: [__webpack_require__(/*! ./band.component.css */ "./src/app/band/band.component.css")]
         }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"], _angular_router__WEBPACK_IMPORTED_MODULE_3__["ActivatedRoute"], _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"], _bands_service__WEBPACK_IMPORTED_MODULE_4__["BandsService"]])
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"], _angular_router__WEBPACK_IMPORTED_MODULE_3__["ActivatedRoute"], _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"], _bands_service__WEBPACK_IMPORTED_MODULE_4__["BandsService"], _player_service__WEBPACK_IMPORTED_MODULE_5__["PlayerService"]])
     ], BandComponent);
     return BandComponent;
 }());
@@ -363,41 +372,48 @@ var BandsService = /** @class */ (function () {
         });
     };
     BandsService.prototype.getSongUrl = function (body) {
-        return this.http.post('http://localhost:3003/bands/getSongUrl', body, {
+        return this.http.post('https://shenkar-band-it.herokuapp.com/bands/getSongUrl', body, {
             observe: 'body',
             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]().append('Content-Type', 'application/json')
         });
     };
     BandsService.prototype.favoriteSong = function (body) {
-        return this.http.post('http://localhost:3003/bands/favoriteSong', body, {
+        return this.http.post('https://shenkar-band-it.herokuapp.com/bands/favoriteSong', body, {
             observe: 'body',
             withCredentials: true,
             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]().append('Content-Type', 'application/json')
         });
     };
     BandsService.prototype.getFavorites = function () {
-        return this.http.get('http://localhost:3003/bands/getFavorites', {
+        return this.http.get('https://shenkar-band-it.herokuapp.com/bands/getFavorites', {
             observe: 'body',
             withCredentials: true,
             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]().append('Content-Type', 'application/json')
         });
     };
     BandsService.prototype.createNewBand = function (body) {
-        return this.http.post('http://localhost:3003/bands/createNewBand', body, {
+        return this.http.post('https://shenkar-band-it.herokuapp.com/bands/createNewBand', body, {
             observe: 'body',
             withCredentials: true,
             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]().append('Content-Type', 'application/json')
         });
     };
     BandsService.prototype.createNewSong = function (body) {
-        return this.http.post('http://localhost:3003/bands/createNewSong', body, {
+        return this.http.post('https://shenkar-band-it.herokuapp.com/bands/createNewSong', body, {
             observe: 'body',
             withCredentials: true,
             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]().append('Content-Type', 'application/json')
         });
     };
     BandsService.prototype.getBandData = function (body) {
-        return this.http.post('http://localhost:3003/bands/getBandData', body, {
+        return this.http.post('https://shenkar-band-it.herokuapp.com/bands/getBandData', body, {
+            observe: 'body',
+            withCredentials: true,
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]().append('Content-Type', 'application/json')
+        });
+    };
+    BandsService.prototype.getAllSongs = function () {
+        return this.http.post('https://shenkar-band-it.herokuapp.com/bands/getAllSongs', {}, {
             observe: 'body',
             withCredentials: true,
             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]().append('Content-Type', 'application/json')
@@ -423,7 +439,7 @@ var BandsService = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "h1{\n  text-align: center;\n}\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvYm9hcmQvYm9hcmQuY29tcG9uZW50LmNzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNFLGtCQUFrQjtBQUNwQiIsImZpbGUiOiJzcmMvYXBwL2JvYXJkL2JvYXJkLmNvbXBvbmVudC5jc3MiLCJzb3VyY2VzQ29udGVudCI6WyJoMXtcbiAgdGV4dC1hbGlnbjogY2VudGVyO1xufVxuIl19 */"
+module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2JvYXJkL2JvYXJkLmNvbXBvbmVudC5jc3MifQ== */"
 
 /***/ }),
 
@@ -434,7 +450,7 @@ module.exports = "h1{\n  text-align: center;\n}\n\n/*# sourceMappingURL=data:app
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<app-menu></app-menu>\n\n<h1>THE BOARD IN PROGRESS...</h1>\n<i class=\"fas fa-user-plus\"></i>\n"
+module.exports = "<h1>THE BOARD IN PROGRESS...</h1>\n"
 
 /***/ }),
 
@@ -490,7 +506,7 @@ module.exports = ".wrapper{\n  width: 82%;\n  float: right;\n  height: 770px;\n 
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!--<body>\n<app-menu></app-menu>\n  <main>\n    <div class=\"topBand\">\n      <h2> ETID MY BAND </h2><br><br>\n      <div class=\"photo\">\n        <img [src]=\"imageUrl\">\n        <input formControlName=\"icon\" type=\"file\" #Image accept=\"image/*\" (change)=\"handleFileInput($event.target.files)\">\n      </div>\n      <section>\n        <form [formGroup]=\"newBandForm\" >\n          <h5> <input formControlName=\"name\" value = \"{{bandData.name}}\" >  </h5>\n          <h5>\n            <p> <select formControlName=\"genre\"  tabindex=\"1\" class=\"form-control\" placeholder=\"Genre\" value=\"{{bandData.genre}}\">\n              <option> rock </option>\n              <option> punk </option>\n              <option> classic </option>\n            </select> </p>\n          </h5><br>\n          <p> <textarea  formControlName=\"description\" value = \" {{bandData.description}} \"></textarea> </p>\n          <button (click)=\"updateBand()\" type=\"submit\"> Submit </button>\n        </form>\n      </section>\n      <div class=\"clear\"></div>\n    </div>\n  </main>\n</body>-->\n\n<body>\n<app-menu></app-menu>\n<div class=\"wrapper\">\n  <div class=\"userDiv\">\n    <h2> EDIT MY BAND </h2><br>\n\n        <form method=\"post\" role=\"form\" [formGroup]=\"newBandForm\">\n          <div class=\"Details\">\n              <ul class=\"container details\">\n                <h3> {{bandData.name}}  </h3> <br><br>\n                <li><p><span class=\"glyphicon glyphicon-music\"></span> <input  formControlName=\"name\" value=\"{{bandData.name}}\"> </p></li>\n                <li><p><span class=\"glyphicon glyphicon-tag\"></span>\n                  <select formControlName=\"genre\"  tabindex=\"1\" class=\"form-control\" placeholder=\"Genre\" value=\"{{bandData.genre}}\">\n                    <option> rock </option>\n                    <option> punk </option>\n                    <option> classic </option>\n                  </select></p>\n                </li>\n\n                <li><p><span class=\"glyphicon glyphicon-comment\"></span>\n                  <textarea  formControlName=\"description\" value = \" {{bandData.description}} \"></textarea>\n                </p></li>\n              </ul> <br><br>\n          </div>\n\n          <div class=\"photo\">\n            <img [src]=\"imageUrl\">\n            <input formControlName=\"icon\" type=\"file\" #Image accept=\"image/*\" (change)=\"handleFileInput($event.target.files)\">\n          </div> <br><br>\n\n          <button (click)=\"updateBand()\" type=\"submit\"> Submit </button>\n        </form>\n\n    <div class=\"clear\"></div>\n  </div>\n\n</div>\n</body>\n\n\n"
+module.exports = "<!--<body>\n<app-menu></app-menu>\n  <main>\n    <div class=\"topBand\">\n      <h2> ETID MY BAND </h2><br><br>\n      <div class=\"photo\">\n        <img [src]=\"imageUrl\">\n        <input formControlName=\"icon\" type=\"file\" #Image accept=\"image/*\" (change)=\"handleFileInput($event.target.files)\">\n      </div>\n      <section>\n        <form [formGroup]=\"newBandForm\" >\n          <h5> <input formControlName=\"name\" value = \"{{bandData.name}}\" >  </h5>\n          <h5>\n            <p> <select formControlName=\"genre\"  tabindex=\"1\" class=\"form-control\" placeholder=\"Genre\" value=\"{{bandData.genre}}\">\n              <option> rock </option>\n              <option> punk </option>\n              <option> classic </option>\n            </select> </p>\n          </h5><br>\n          <p> <textarea  formControlName=\"description\" value = \" {{bandData.description}} \"></textarea> </p>\n          <button (click)=\"updateBand()\" type=\"submit\"> Submit </button>\n        </form>\n      </section>\n      <div class=\"clear\"></div>\n    </div>\n  </main>\n</body>-->\n\n<div class=\"wrapper\">\n  <div class=\"userDiv\">\n    <h2> EDIT MY BAND </h2><br>\n\n        <form method=\"post\" role=\"form\" [formGroup]=\"newBandForm\">\n          <div class=\"Details\">\n              <ul class=\"container details\">\n                <h3> {{bandData.name}}  </h3> <br><br>\n                <li><p><span class=\"glyphicon glyphicon-music\"></span> <input  formControlName=\"name\" value=\"{{bandData.name}}\"> </p></li>\n                <li><p><span class=\"glyphicon glyphicon-tag\"></span>\n                  <select formControlName=\"genre\"  tabindex=\"1\" class=\"form-control\" placeholder=\"Genre\" value=\"{{bandData.genre}}\">\n                    <option> rock </option>\n                    <option> punk </option>\n                    <option> classic </option>\n                  </select></p>\n                </li>\n\n                <li><p><span class=\"glyphicon glyphicon-comment\"></span>\n                  <textarea  formControlName=\"description\" value = \" {{bandData.description}} \"></textarea>\n                </p></li>\n              </ul> <br><br>\n          </div>\n\n          <div class=\"photo\">\n            <img [src]=\"imageUrl\">\n            <input formControlName=\"icon\" type=\"file\" #Image accept=\"image/*\" (change)=\"handleFileInput($event.target.files)\">\n          </div> <br><br>\n\n          <button (click)=\"updateBand()\" type=\"submit\"> Submit </button>\n        </form>\n\n    <div class=\"clear\"></div>\n  </div>\n\n</div>\n\n\n"
 
 /***/ }),
 
@@ -582,7 +598,7 @@ module.exports = ".wrapper{\n  width: 82%;\n  float: right;\n  height: 770px;\n 
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<body>\n<app-menu></app-menu>\n<div class=\"wrapper\">\n  <div class=\"userDiv\">\n    <h2> EDIT MY PROFILE </h2><br>\n\n        <form method=\"post\" role=\"form\" [formGroup]=\"userForm\">\n          <div class=\"Details\">\n              <ul class=\"container details\">\n                <h3> {{firstName}} {{lastName}} </h3> <br><br>\n                <li><p><span class=\"glyphicon glyphicon-user\"></span> <input  formControlName=\"firstName\" value=\"{{firstName}}\"> </p></li>\n                <li><p><span class=\"glyphicon glyphicon-user\"></span> <input  formControlName=\"lastName\" value=\"{{lastName}}\"> </p></li>\n                <li><p><span class=\"glyphicon glyphicon-envelope one\"></span> <input type=\"email\" formControlName=\"email\" value=\"{{email}}\"> </p></li>\n                <li><p><span class=\"glyphicon glyphicon-tag\"></span>\n                  <select formControlName=\"genre\"  tabindex=\"1\" class=\"form-control\" placeholder=\"Genre\" value=\"{{genre}}\">\n                    <option> rock </option>\n                    <option> punk </option>\n                    <option> classic </option>\n                  </select></p>\n                </li>\n              </ul> <br><br>\n          </div>\n\n          <div class=\"photo\">\n            <img [src]=\"imageUrl\">\n            <input formControlName=\"icon\" type=\"file\" #Image accept=\"image/*\" (change)=\"handleFileInput($event.target.files)\">\n          </div> <br><br>\n\n          <button (click)=\"updateUser()\" type=\"submit\"> Submit </button>\n        </form>\n\n    <div class=\"clear\"></div>\n  </div>\n\n</div>\n</body>\n"
+module.exports = "<div class=\"wrapper\">\n  <div class=\"userDiv\">\n    <h2> EDIT MY PROFILE </h2><br>\n\n        <form method=\"post\" role=\"form\" [formGroup]=\"userForm\">\n          <div class=\"Details\">\n              <ul class=\"container details\">\n                <h3> {{firstName}} {{lastName}} </h3> <br><br>\n                <li><p><span class=\"glyphicon glyphicon-user\"></span> <input  formControlName=\"firstName\" value=\"{{firstName}}\"> </p></li>\n                <li><p><span class=\"glyphicon glyphicon-user\"></span> <input  formControlName=\"lastName\" value=\"{{lastName}}\"> </p></li>\n                <li><p><span class=\"glyphicon glyphicon-envelope one\"></span> <input type=\"email\" formControlName=\"email\" value=\"{{email}}\"> </p></li>\n                <li><p><span class=\"glyphicon glyphicon-tag\"></span>\n                  <select formControlName=\"genre\"  tabindex=\"1\" class=\"form-control\" placeholder=\"Genre\" value=\"{{genre}}\">\n                    <option> rock </option>\n                    <option> punk </option>\n                    <option> classic </option>\n                  </select></p>\n                </li>\n              </ul> <br><br>\n          </div>\n\n          <div class=\"photo\">\n            <img [src]=\"imageUrl\">\n            <input formControlName=\"icon\" type=\"file\" #Image accept=\"image/*\" (change)=\"handleFileInput($event.target.files)\">\n          </div> <br><br>\n\n          <button (click)=\"updateUser()\" type=\"submit\"> Submit </button>\n        </form>\n\n    <div class=\"clear\"></div>\n  </div>\n\n</div>\n"
 
 /***/ }),
 
@@ -769,7 +785,7 @@ module.exports = "#wrapper {\n  background:#DCDCDC;\n}\ninput{\n  border:none;\n
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!--<div class=\"logout\">-->\n  <!--<button  (click)=\"logout()\"> Log Out </button>-->\n<!--</div>-->\n<!--<h3>{{firstName}} {{lastName}} </h3>-->\n\n\n<div class=\"col-xs-4 search-box\">\n  <input type=\"text\" name=\"\" placeholder=\"Search Library\"> <span class=\"glyphicon glyphicon-search\"></span>\n</div>\n<div *ngIf=\"!isLoggedIn\" style=\"float:right; text-align:right\" class=\"col-xs-3\">\n  <a routerLink=\"/login\"  id=\"login-form-link\">\n  <span style=\"font-size: 14px; margin-right:15px;\">Login</span> <img style=\"width:45px; border-radius:100%\" src=\"../../assets/anonymous-user.png\">\n  </a>\n</div>\n<div *ngIf=\"isLoggedIn\" style=\"float:right; text-align:right\" class=\"col-xs-3\">\n  <a routerLink=\"/profile/{{_id}}\"  id=\"login-form-link\">\n    <span style=\"font-size: 14px; margin-right:15px;\">Hi {{firstName}} {{lastName}} ! </span> <img style=\"width:45px; border-radius:100%\" src=\"{{icon}}\">\n  </a>\n</div>\n"
+module.exports = "<!--<div class=\"logout\">-->\n  <!--<button  (click)=\"logout()\"> Log Out </button>-->\n<!--</div>-->\n<!--<h3>{{firstName}} {{lastName}} </h3>-->\n\n\n<div class=\"col-xs-4 search-box\">\n  <!--<input type=\"text\" name=\"\" placeholder=\"Search Library\"> <span class=\"glyphicon glyphicon-search\"></span>-->\n</div>\n<div *ngIf=\"!isLoggedIn\" style=\"float:right; text-align:right\" class=\"col-xs-3\">\n  <a routerLink=\"/login\"  id=\"login-form-link\">\n  <span style=\"font-size: 14px; margin-right:15px;\">Login</span> <img style=\"width:45px; border-radius:100%\" src=\"../../assets/anonymous-user.png\">\n  </a>\n</div>\n<div *ngIf=\"isLoggedIn\" style=\"float:right; text-align:right\" class=\"col-xs-3\">\n  <a routerLink=\"/profile/{{_id}}\"  id=\"login-form-link\">\n    <span style=\"font-size: 14px; margin-right:15px;\">Hi {{firstName}} {{lastName}} ! </span> <img style=\"width:45px; border-radius:100%\" src=\"{{icon}}\">\n  </a>\n</div>\n"
 
 /***/ }),
 
@@ -846,7 +862,7 @@ var IndexService = /** @class */ (function () {
         this.http = http;
     }
     IndexService.prototype.getIndexData = function () {
-        return this.http.get('http://localhost:3003/index/getIndexData', {
+        return this.http.get('https://shenkar-band-it.herokuapp.com/index/getIndexData', {
             observe: 'body',
             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]().append('Content-Type', 'application/json')
         });
@@ -1088,7 +1104,7 @@ var LoginComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "*{\n  margin: 0px;\n  padding: 0px;\n}\n#logo{\n  display: block;\n  background: url('logo.png') no-repeat;\n  background-position: center;\n  background-size:50%;\n  width:100%;\n  height:100px;\n}\n#menu{\n  background-color: #06002f;\n}\na{\n  color: white;\n  text-decoration: none;\n}\na:hover{\n  color: #FF8C00;\n  text-decoration: none;\n}\na.active{\n  color:#FF8C00;\n}\nli{\n  font-size: 14px;\n  padding: 10%;\n  list-style-type: none;\n  padding-left: 30px;\n}\nli.active{\n  background-color: #708090;\n}\nli:hover{\n  background-color: #708090;\n}\n.line{\n  border-bottom: 1px solid white;\n  padding-bottom: 20%;\n}\nspan{\n  color: orange;\n  margin-right: 4%;\n}\n\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvbWVudS9tZW51LmNvbXBvbmVudC5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDRSxXQUFXO0VBQ1gsWUFBWTtBQUNkO0FBQ0E7RUFDRSxjQUFjO0VBQ2QscUNBQWtEO0VBQ2xELDJCQUEyQjtFQUMzQixtQkFBbUI7RUFDbkIsVUFBVTtFQUNWLFlBQVk7QUFDZDtBQUNBO0VBQ0UseUJBQXlCO0FBQzNCO0FBQ0E7RUFDRSxZQUFZO0VBQ1oscUJBQXFCO0FBQ3ZCO0FBQ0E7RUFDRSxjQUFjO0VBQ2QscUJBQXFCO0FBQ3ZCO0FBQ0E7RUFDRSxhQUFhO0FBQ2Y7QUFDQTtFQUNFLGVBQWU7RUFDZixZQUFZO0VBQ1oscUJBQXFCO0VBQ3JCLGtCQUFrQjtBQUNwQjtBQUNBO0VBQ0UseUJBQXlCO0FBQzNCO0FBQ0E7RUFDRSx5QkFBeUI7QUFDM0I7QUFDQTtFQUNFLDhCQUE4QjtFQUM5QixtQkFBbUI7QUFDckI7QUFDQTtFQUNFLGFBQWE7RUFDYixnQkFBZ0I7QUFDbEIiLCJmaWxlIjoic3JjL2FwcC9tZW51L21lbnUuY29tcG9uZW50LmNzcyIsInNvdXJjZXNDb250ZW50IjpbIip7XG4gIG1hcmdpbjogMHB4O1xuICBwYWRkaW5nOiAwcHg7XG59XG4jbG9nb3tcbiAgZGlzcGxheTogYmxvY2s7XG4gIGJhY2tncm91bmQ6IHVybCgnLi4vLi4vYXNzZXRzL2xvZ28ucG5nJykgbm8tcmVwZWF0O1xuICBiYWNrZ3JvdW5kLXBvc2l0aW9uOiBjZW50ZXI7XG4gIGJhY2tncm91bmQtc2l6ZTo1MCU7XG4gIHdpZHRoOjEwMCU7XG4gIGhlaWdodDoxMDBweDtcbn1cbiNtZW51e1xuICBiYWNrZ3JvdW5kLWNvbG9yOiAjMDYwMDJmO1xufVxuYXtcbiAgY29sb3I6IHdoaXRlO1xuICB0ZXh0LWRlY29yYXRpb246IG5vbmU7XG59XG5hOmhvdmVye1xuICBjb2xvcjogI0ZGOEMwMDtcbiAgdGV4dC1kZWNvcmF0aW9uOiBub25lO1xufVxuYS5hY3RpdmV7XG4gIGNvbG9yOiNGRjhDMDA7XG59XG5saXtcbiAgZm9udC1zaXplOiAxNHB4O1xuICBwYWRkaW5nOiAxMCU7XG4gIGxpc3Qtc3R5bGUtdHlwZTogbm9uZTtcbiAgcGFkZGluZy1sZWZ0OiAzMHB4O1xufVxubGkuYWN0aXZle1xuICBiYWNrZ3JvdW5kLWNvbG9yOiAjNzA4MDkwO1xufVxubGk6aG92ZXJ7XG4gIGJhY2tncm91bmQtY29sb3I6ICM3MDgwOTA7XG59XG4ubGluZXtcbiAgYm9yZGVyLWJvdHRvbTogMXB4IHNvbGlkIHdoaXRlO1xuICBwYWRkaW5nLWJvdHRvbTogMjAlO1xufVxuc3BhbntcbiAgY29sb3I6IG9yYW5nZTtcbiAgbWFyZ2luLXJpZ2h0OiA0JTtcbn1cblxuIl19 */"
+module.exports = "*{\n  margin: 0px;\n  padding: 0px;\n}\n#logo{\n  display: block;\n  background: url('logo.png') no-repeat;\n  background-position: center;\n  background-size:50%;\n  width:100%;\n  height:100px;\n}\n#menu{\n  min-height:100vh;\n  background-color: #06002f;\n}\na{\n  color: white;\n  text-decoration: none;\n}\na:hover{\n  color: #FF8C00;\n  text-decoration: none;\n}\na.active{\n  color:#FF8C00;\n}\nli{\n  font-size: 14px;\n  padding: 10%;\n  list-style-type: none;\n  padding-left: 30px;\n}\nli.active{\n  background-color: #708090;\n}\nli:hover{\n  background-color: #708090;\n}\n.line{\n  border-bottom: 1px solid white;\n  padding-bottom: 20%;\n}\nspan{\n  color: orange;\n  margin-right: 4%;\n}\n\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvbWVudS9tZW51LmNvbXBvbmVudC5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDRSxXQUFXO0VBQ1gsWUFBWTtBQUNkO0FBQ0E7RUFDRSxjQUFjO0VBQ2QscUNBQWtEO0VBQ2xELDJCQUEyQjtFQUMzQixtQkFBbUI7RUFDbkIsVUFBVTtFQUNWLFlBQVk7QUFDZDtBQUNBO0VBQ0UsZ0JBQWdCO0VBQ2hCLHlCQUF5QjtBQUMzQjtBQUNBO0VBQ0UsWUFBWTtFQUNaLHFCQUFxQjtBQUN2QjtBQUNBO0VBQ0UsY0FBYztFQUNkLHFCQUFxQjtBQUN2QjtBQUNBO0VBQ0UsYUFBYTtBQUNmO0FBQ0E7RUFDRSxlQUFlO0VBQ2YsWUFBWTtFQUNaLHFCQUFxQjtFQUNyQixrQkFBa0I7QUFDcEI7QUFDQTtFQUNFLHlCQUF5QjtBQUMzQjtBQUNBO0VBQ0UseUJBQXlCO0FBQzNCO0FBQ0E7RUFDRSw4QkFBOEI7RUFDOUIsbUJBQW1CO0FBQ3JCO0FBQ0E7RUFDRSxhQUFhO0VBQ2IsZ0JBQWdCO0FBQ2xCIiwiZmlsZSI6InNyYy9hcHAvbWVudS9tZW51LmNvbXBvbmVudC5jc3MiLCJzb3VyY2VzQ29udGVudCI6WyIqe1xuICBtYXJnaW46IDBweDtcbiAgcGFkZGluZzogMHB4O1xufVxuI2xvZ297XG4gIGRpc3BsYXk6IGJsb2NrO1xuICBiYWNrZ3JvdW5kOiB1cmwoJy4uLy4uL2Fzc2V0cy9sb2dvLnBuZycpIG5vLXJlcGVhdDtcbiAgYmFja2dyb3VuZC1wb3NpdGlvbjogY2VudGVyO1xuICBiYWNrZ3JvdW5kLXNpemU6NTAlO1xuICB3aWR0aDoxMDAlO1xuICBoZWlnaHQ6MTAwcHg7XG59XG4jbWVudXtcbiAgbWluLWhlaWdodDoxMDB2aDtcbiAgYmFja2dyb3VuZC1jb2xvcjogIzA2MDAyZjtcbn1cbmF7XG4gIGNvbG9yOiB3aGl0ZTtcbiAgdGV4dC1kZWNvcmF0aW9uOiBub25lO1xufVxuYTpob3ZlcntcbiAgY29sb3I6ICNGRjhDMDA7XG4gIHRleHQtZGVjb3JhdGlvbjogbm9uZTtcbn1cbmEuYWN0aXZle1xuICBjb2xvcjojRkY4QzAwO1xufVxubGl7XG4gIGZvbnQtc2l6ZTogMTRweDtcbiAgcGFkZGluZzogMTAlO1xuICBsaXN0LXN0eWxlLXR5cGU6IG5vbmU7XG4gIHBhZGRpbmctbGVmdDogMzBweDtcbn1cbmxpLmFjdGl2ZXtcbiAgYmFja2dyb3VuZC1jb2xvcjogIzcwODA5MDtcbn1cbmxpOmhvdmVye1xuICBiYWNrZ3JvdW5kLWNvbG9yOiAjNzA4MDkwO1xufVxuLmxpbmV7XG4gIGJvcmRlci1ib3R0b206IDFweCBzb2xpZCB3aGl0ZTtcbiAgcGFkZGluZy1ib3R0b206IDIwJTtcbn1cbnNwYW57XG4gIGNvbG9yOiBvcmFuZ2U7XG4gIG1hcmdpbi1yaWdodDogNCU7XG59XG5cbiJdfQ== */"
 
 /***/ }),
 
@@ -1099,7 +1115,7 @@ module.exports = "*{\n  margin: 0px;\n  padding: 0px;\n}\n#logo{\n  display: blo
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<nav id=\"menu\">\n  <a routerLink=\"/index\" id=\"logo\"></a>\n  <ul>\n    <li> <span class=\"glyphicon glyphicon-headphones\"></span> <a routerLink=\"/index\" >EXPLORE</a></li>\n    <li > <span class=\"glyphicon glyphicon-signal\"></span> <a routerLink=\"/studio\" >MY STUDIO</a> </li>\n    <li > <span class=\"glyphicon glyphicon-heart-empty\"></span> <a routerLink=\"/favoriets\" >FAVORITES</a> </li>\n\n    <li class=\"line\" > <span class=\"glyphicon glyphicon-music\"></span> <a routerLink=\"/board\" >THE BOARD</a> </li>\n    <li *ngFor=\"let band of bands\" style=\"color:white;\">\n      <a routerLink=\"{{'/band/'+band._id}}\">\n        <img [src]=\"band.icon\" style=\"width: 30px;margin-right: 5px;\">\n        {{band.name}}\n      </a>\n    </li>\n    <li class=\"line\" ><span class=\"glyphicon glyphicon-plus-sign\"></span><a routerLink=\"/new-band\" >CREATE NEW BAND</a> </li>\n    <li ><span class=\"glyphicon glyphicon-plus-sign\"></span><a routerLink=\"/invite-friend\" >INVITE A FRIEND</a> </li>\n\n\n    <li ><span class=\"glyphicon glyphicon-user\"></span><a routerLink=\"/profile/:id\">MY PROFILE</a> </li>\n  </ul>\n</nav>\n\n\n\n"
+module.exports = "<nav id=\"menu\">\n  <a routerLink=\"/index\" id=\"logo\"></a>\n  <ul>\n    <li> <span class=\"glyphicon glyphicon-headphones\"></span> <a routerLink=\"/index\" >EXPLORE</a></li>\n    <li *ngIf=\"isLoggedIn\"> <span class=\"glyphicon glyphicon-signal\"></span> <a routerLink=\"/studio\" >MY STUDIO</a> </li>\n    <li *ngIf=\"isLoggedIn\"> <span class=\"glyphicon glyphicon-heart-empty\"></span> <a routerLink=\"/favoriets\" >FAVORITES</a> </li>\n\n    <li class=\"line\" > <span class=\"glyphicon glyphicon-music\"></span> <a routerLink=\"/board\" >THE BOARD</a> </li>\n    <li *ngFor=\"let band of bands\" style=\"color:white;\">\n      <a routerLink=\"{{'/band/'+band._id}}\">\n        <img [src]=\"band.icon\" style=\"width: 30px;margin-right: 5px;\">\n        {{band.name}}\n      </a>\n    </li>\n    <li *ngIf=\"isLoggedIn\" class=\"line\" ><span class=\"glyphicon glyphicon-plus-sign\"></span><a routerLink=\"/new-band\" >CREATE NEW BAND</a> </li>\n    <!--<li ><span class=\"glyphicon glyphicon-plus-sign\"></span><a routerLink=\"/invite-friend\" >INVITE A FRIEND</a> </li>-->\n\n\n    <li *ngIf=\"isLoggedIn\" ><span class=\"glyphicon glyphicon-user\"></span><a routerLink=\"/profile/:id\">MY PROFILE</a> </li>\n  </ul>\n</nav>\n\n\n\n"
 
 /***/ }),
 
@@ -1127,15 +1143,18 @@ var MenuComponent = /** @class */ (function () {
         this.registerService = registerService;
         this.http = http;
         this.bands = [];
+        this.isLoggedIn = false;
         this.registerService.user().subscribe(function (data) {
             _this.updateBands(data);
+        }, function (err) {
+            console.error(err);
         });
         this.subscription = this.registerService.getUserObj().subscribe(function (data) {
-            console.log('menuComp', data);
             _this.updateBands(data);
         });
     }
     MenuComponent.prototype.updateBands = function (data) {
+        this.isLoggedIn = true;
         this.bands = data.bands;
     };
     MenuComponent.prototype.ngOnInit = function () {
@@ -1305,7 +1324,7 @@ module.exports = ".wrapper{\n  width: 82%;\n  float: right;\n  height: 770px;\n 
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\n  <div class=\"wrapper\">\n    <h3>{{firstName}} {{lastName}} </h3>\n    <div class=\"userDiv\">\n          <div class=\"Details\">\n                <h2> {{firstName}} {{lastName}}\n                  <a (click) = \"goToEdit()\">\n                    <span class=\"glyphicon glyphicon-pencil\"></span>\n                  </a>\n                </h2> <br><br>\n                <ul class=\"container details\">\n                  <li><p><span class=\"glyphicon glyphicon-user\"></span> {{firstName}} {{lastName}}</p></li>\n                  <li><p><span class=\"glyphicon glyphicon-envelope one\"></span>{{email}}</p></li>\n                  <li><p><span class=\"glyphicon glyphicon-tag\"></span>{{genre}}</p></li>\n                </ul> <br><br>\n          </div>\n      <div class=\"photo\">\n          <img [src]=\"imageUrl\">\n      </div>\n      <div class=\"clear\"></div>\n    </div>\n\n  </div>\n"
+module.exports = "\n    <div class=\"userDiv\">\n          <div class=\"Details\">\n                <h2> {{firstName}} {{lastName}}\n                  <a (click) = \"goToEdit()\">\n                    <span class=\"glyphicon glyphicon-pencil\"></span>\n                  </a>\n                </h2> <br><br>\n                <ul class=\"container details\">\n                  <li><p><span class=\"glyphicon glyphicon-user\"></span> {{firstName}} {{lastName}}</p></li>\n                  <li><p><span class=\"glyphicon glyphicon-envelope one\"></span>{{email}}</p></li>\n                  <li><p><span class=\"glyphicon glyphicon-tag\"></span>{{genre}}</p></li>\n                </ul> <br><br>\n          </div>\n      <div class=\"photo\">\n          <img [src]=\"imageUrl\">\n      </div>\n      <div class=\"clear\"></div>\n    </div>\n"
 
 /***/ }),
 
@@ -1402,7 +1421,7 @@ var RegisterService = /** @class */ (function () {
         return this.userData;
     };
     RegisterService.prototype.register = function (body) {
-        return this.http.post('http://localhost:3003/users/register', body, {
+        return this.http.post('https://shenkar-band-it.herokuapp.com/users/register', body, {
             observe: 'body',
             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]().append('Content-Type', 'application/json')
         });
@@ -1415,14 +1434,14 @@ var RegisterService = /** @class */ (function () {
         });
     };
     RegisterService.prototype.login = function (body) {
-        return this.http.post('http://localhost:3003/users/login', body, {
+        return this.http.post('https://shenkar-band-it.herokuapp.com/users/login', body, {
             observe: 'body',
             withCredentials: true,
             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]().append('Content-Type', 'application/json')
         });
     };
     RegisterService.prototype.user = function () {
-        return this.http.get('http://localhost:3003/users/getUserData', {
+        return this.http.get('https://shenkar-band-it.herokuapp.com/users/getUserData', {
             observe: 'body',
             withCredentials: true,
             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]().append('Content-Type', 'application/json')
@@ -1646,7 +1665,7 @@ var SoundPlayerComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "h1{\n  text-align: center;\n}\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvc3R1ZGlvL3N0dWRpby5jb21wb25lbnQuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0Usa0JBQWtCO0FBQ3BCIiwiZmlsZSI6InNyYy9hcHAvc3R1ZGlvL3N0dWRpby5jb21wb25lbnQuY3NzIiwic291cmNlc0NvbnRlbnQiOlsiaDF7XG4gIHRleHQtYWxpZ246IGNlbnRlcjtcbn1cbiJdfQ== */"
+module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL3N0dWRpby9zdHVkaW8uY29tcG9uZW50LmNzcyJ9 */"
 
 /***/ }),
 
@@ -1657,7 +1676,7 @@ module.exports = "h1{\n  text-align: center;\n}\n\n/*# sourceMappingURL=data:app
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<app-menu></app-menu>\n\n<h1>STUDIO IN PROGRESS...</h1>\n"
+module.exports = "<div class=\"col-xs-12\">\n  <h1>MY STUDIO</h1>\n  <h2>EXPORTED SONGS</h2>\n  <div *ngFor=\"let song of exportedSongs\">\n    <a (click)=\"playSong(song._id)\">\n      <p style=\"margin:15px 0px; font-size: 16px; background: #07072f38; padding: 10px;\">\n        <img style=\"border-radius:50%; width:60px; margin-right:10px;\" src={{song.band.icon}}>{{song.band.name}} - {{song.title}}\n        <a href=\"{{'/songstudio/?id='+song._id}}\">\n          <span style=\"margin-left:10px\" class=\"glyphicon glyphicon-edit\"></span>\n        </a>\n      </p>\n    </a>\n  </div>\n  <h2>YET TO BE EXPORTED</h2>\n  <div *ngFor=\"let song of unexportedSongs\">\n      <p style=\"margin:15px 0px; font-size: 16px; background: #07072f38; padding: 10px;\">\n        <img style=\"border-radius:50%; width:60px; margin-right:10px;\" src={{song.band.icon}}>{{song.band.name}} - {{song.title}}\n        <a href=\"{{'/songstudio/?id='+song._id}}\">\n          <span style=\"margin-left:10px\" class=\"glyphicon glyphicon-edit\"></span>\n        </a>\n      </p>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -1673,11 +1692,40 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "StudioComponent", function() { return StudioComponent; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _bands_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../bands.service */ "./src/app/bands.service.ts");
+/* harmony import */ var _player_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../player.service */ "./src/app/player.service.ts");
+
+
 
 
 var StudioComponent = /** @class */ (function () {
-    function StudioComponent() {
+    function StudioComponent(bandsService, playerService) {
+        var _this = this;
+        this.bandsService = bandsService;
+        this.playerService = playerService;
+        this.exportedSongs = [];
+        this.unexportedSongs = [];
+        this.bandsService.getAllSongs().subscribe(function (data) {
+            _this.sortSongs(data);
+        });
     }
+    StudioComponent.prototype.sortSongs = function (data) {
+        var _this = this;
+        data.forEach(function (song) {
+            if (song.lastExportedUrl) {
+                _this.exportedSongs.push(song);
+            }
+            else {
+                _this.unexportedSongs.push(song);
+            }
+        });
+    };
+    StudioComponent.prototype.playSong = function (songId) {
+        var audioObj = {
+            songId: songId
+        };
+        this.playerService.sendToPlayer(audioObj);
+    };
     StudioComponent.prototype.ngOnInit = function () {
     };
     StudioComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
@@ -1686,7 +1734,7 @@ var StudioComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./studio.component.html */ "./src/app/studio/studio.component.html"),
             styles: [__webpack_require__(/*! ./studio.component.css */ "./src/app/studio/studio.component.css")]
         }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [])
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_bands_service__WEBPACK_IMPORTED_MODULE_2__["BandsService"], _player_service__WEBPACK_IMPORTED_MODULE_3__["PlayerService"]])
     ], StudioComponent);
     return StudioComponent;
 }());

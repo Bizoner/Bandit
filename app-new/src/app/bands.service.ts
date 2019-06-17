@@ -19,14 +19,14 @@ export class BandsService {
   }
 
   getSongUrl(body:any) {
-    return this.http.post('http://localhost:3003/bands/getSongUrl'  ,body, {
+    return this.http.post('https://shenkar-band-it.herokuapp.com/bands/getSongUrl'  ,body, {
       observe:'body',
       headers: new HttpHeaders().append('Content-Type' , 'application/json')
     });
   }
 
   favoriteSong(body:any) {
-    return this.http.post('http://localhost:3003/bands/favoriteSong'  ,body, {
+    return this.http.post('https://shenkar-band-it.herokuapp.com/bands/favoriteSong'  ,body, {
       observe:'body',
       withCredentials:true,
       headers: new HttpHeaders().append('Content-Type' , 'application/json')
@@ -34,7 +34,7 @@ export class BandsService {
   }
 
   getFavorites() {
-    return this.http.get('http://localhost:3003/bands/getFavorites'  , {
+    return this.http.get('https://shenkar-band-it.herokuapp.com/bands/getFavorites'  , {
       observe:'body',
       withCredentials:true,
       headers: new HttpHeaders().append('Content-Type' , 'application/json')
@@ -42,7 +42,7 @@ export class BandsService {
   }
 
   createNewBand(body:any) {
-    return this.http.post('http://localhost:3003/bands/createNewBand'  , body,{
+    return this.http.post('https://shenkar-band-it.herokuapp.com/bands/createNewBand'  , body,{
       observe:'body',
       withCredentials:true,
       headers: new HttpHeaders().append('Content-Type' , 'application/json')
@@ -50,7 +50,7 @@ export class BandsService {
   }
 
   createNewSong(body:any) {
-    return this.http.post('http://localhost:3003/bands/createNewSong'  , body,{
+    return this.http.post('https://shenkar-band-it.herokuapp.com/bands/createNewSong'  , body,{
       observe:'body',
       withCredentials:true,
       headers: new HttpHeaders().append('Content-Type' , 'application/json')
@@ -58,7 +58,7 @@ export class BandsService {
   }
 
   getBandData(body:any) {
-    return this.http.post('http://localhost:3003/bands/getBandData'  , body,{
+    return this.http.post('https://shenkar-band-it.herokuapp.com/bands/getBandData'  , body,{
       observe:'body',
       withCredentials:true,
       headers: new HttpHeaders().append('Content-Type' , 'application/json')
@@ -66,7 +66,7 @@ export class BandsService {
   }
 
   getAllSongs() {
-    return this.http.post('http://localhost:3003/bands/getAllSongs'  ,{},{
+    return this.http.post('https://shenkar-band-it.herokuapp.com/bands/getAllSongs'  ,{},{
       observe:'body',
       withCredentials:true,
       headers: new HttpHeaders().append('Content-Type' , 'application/json')

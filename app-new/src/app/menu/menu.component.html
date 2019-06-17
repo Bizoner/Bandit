@@ -2,8 +2,8 @@
   <a routerLink="/index" id="logo"></a>
   <ul>
     <li> <span class="glyphicon glyphicon-headphones"></span> <a routerLink="/index" >EXPLORE</a></li>
-    <li > <span class="glyphicon glyphicon-signal"></span> <a routerLink="/studio" >MY STUDIO</a> </li>
-    <li > <span class="glyphicon glyphicon-heart-empty"></span> <a routerLink="/favoriets" >FAVORITES</a> </li>
+    <li *ngIf="isLoggedIn"> <span class="glyphicon glyphicon-signal"></span> <a routerLink="/studio" >MY STUDIO</a> </li>
+    <li *ngIf="isLoggedIn"> <span class="glyphicon glyphicon-heart-empty"></span> <a routerLink="/favoriets" >FAVORITES</a> </li>
 
     <li class="line" > <span class="glyphicon glyphicon-music"></span> <a routerLink="/board" >THE BOARD</a> </li>
     <li *ngFor="let band of bands" style="color:white;">
@@ -12,11 +12,11 @@
         {{band.name}}
       </a>
     </li>
-    <li class="line" ><span class="glyphicon glyphicon-plus-sign"></span><a routerLink="/new-band" >CREATE NEW BAND</a> </li>
-    <li ><span class="glyphicon glyphicon-plus-sign"></span><a routerLink="/invite-friend" >INVITE A FRIEND</a> </li>
+    <li *ngIf="isLoggedIn" class="line" ><span class="glyphicon glyphicon-plus-sign"></span><a routerLink="/new-band" >CREATE NEW BAND</a> </li>
+    <!--<li ><span class="glyphicon glyphicon-plus-sign"></span><a routerLink="/invite-friend" >INVITE A FRIEND</a> </li>-->
 
 
-    <li ><span class="glyphicon glyphicon-user"></span><a routerLink="/profile/:id">MY PROFILE</a> </li>
+    <li *ngIf="isLoggedIn" ><span class="glyphicon glyphicon-user"></span><a routerLink="/profile/:id">MY PROFILE</a> </li>
   </ul>
 </nav>
 
