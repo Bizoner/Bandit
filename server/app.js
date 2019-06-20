@@ -38,20 +38,30 @@ app.use('/users',user);
 app.use('/bands',band);
 app.use('/index',index);
 
-app.get('/songstudio',(req,res) => {
-    app.use(express.static(path.join(__dirname, 'client-studio')));
-    res.sendFile(path.join(__dirname, 'client-studio/index.html'))
-});
 
-app.get('/bands/:id',(req,res)=> {
-    app.use(express.static(path.join(__dirname, 'client-dash')));
+app.use('/songstudio',express.static(path.join(__dirname, 'client-studio')));
+app.use(express.static(path.join(__dirname, 'client-dash')));
+
+//
+// app.get('/songstudio',(req,res) => {
+//     app.use(express.static(path.join(__dirname, 'client-studio')));
+//     res.sendFile(path.join(__dirname, 'client-studio/index.html'))
+// });
+
+// app.get('/bands/:id',(req,res)=> {
+//     app.use(express.static(path.join(__dirname, 'client-dash')));
+//     res.sendfile(path.join(__dirname, 'client-dash/index.html'))
+// });
+
+app.use(function (req, res, next) {
     res.sendfile(path.join(__dirname, 'client-dash/index.html'))
 });
 
-app.get('/',(req,res)=> {
-    app.use(express.static(path.join(__dirname, 'client-dash')));
-    res.sendFile(path.join(__dirname, 'client-dash/index.html'))
-});
+//
+// app.get('/',(req,res)=> {
+//     app.use(express.static(path.join(__dirname, 'client-dash')));
+//     res.sendFile(path.join(__dirname, 'client-dash/index.html'))
+// });
 
 app.listen(process.env.PORT || 3003, () => {
     console.log('Server is up and running on port numner 3003');

@@ -29,7 +29,7 @@ export class RegisterService {
   }
 
   logout(){
-    return this.http.get('https://shenkar-band-it.herokuapp.com/users/logout',{
+    return this.http.get('https://shenkar-band-it.herokuapp.com//users/logout',{
       observe:'body',
       withCredentials:true,
       headers: new HttpHeaders().append('Content-Type' , 'application/json')
@@ -37,21 +37,21 @@ export class RegisterService {
   }
 
   register(body:any){
-      return this.http.post('https://shenkar-band-it.herokuapp.com/users/register',body,{
+      return this.http.post('https://shenkar-band-it.herokuapp.com//users/register',body,{
         observe:'body',
         headers: new HttpHeaders().append('Content-Type' , 'application/json')
       });
   }
   updateUser(body:any) {
     console.log('hi from service');
-    return this.http.post('http://localhost:3000/user/updateUser'  ,body, {
+    return this.http.post('https://shenkar-band-it.herokuapp.com//user/updateUser'  ,body, {
       observe:'body',
       headers: new HttpHeaders().append('Content-Type' , 'application/json')
     });
   }
 
   login(body:any){
-    return this.http.post('https://shenkar-band-it.herokuapp.com/users/login' ,body,{
+    return this.http.post('https://shenkar-band-it.herokuapp.com//users/login' ,body,{
       observe:'body',
       withCredentials:true,
       headers: new HttpHeaders().append('Content-Type' , 'application/json')
@@ -59,7 +59,7 @@ export class RegisterService {
   }
 
   user(){
-    return this.http.get('https://shenkar-band-it.herokuapp.com/users/getUserData',{
+    return this.http.get('https://shenkar-band-it.herokuapp.com//users/getUserData',{
       observe:'body',
       withCredentials:true,
       headers: new HttpHeaders().append('Content-Type' , 'application/json')

@@ -36,14 +36,14 @@ export class NewBandComponent implements OnInit {
       },(err) => {
 
       })
-      // const req = this.http.post<any>("https://shenkar-band-it.herokuapp.com/bands/createNewBand",objReq);
+      // const req = this.http.post<any>("https://shenkar-band-it.herokuapp.com//bands/createNewBand",objReq);
       // req.subscribe((data)=>{
-      //     window.location.href = 'https://shenkar-band-it.herokuapp.com/bands/'+data._id
+      //     window.location.href = 'https://shenkar-band-it.herokuapp.com//bands/'+data._id
       // })
   }
 
   goToPage(data) {
-    window.location.href = 'https://shenkar-band-it.herokuapp.com/bands/'+data._id
+    window.location.href = 'https://shenkar-band-it.herokuapp.com//bands/'+data._id
   }
 
   onFileChange(event) {

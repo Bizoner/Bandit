@@ -311,7 +311,7 @@ class Studio extends Component {
         const length = this.updateSongLength();
         await this.playAll(true);
         console.log('mainGain: ',this.state.mainGain);
-        var rec = new Recorder(this.state.mainGain,{workerPath:'../recorderWorker.js'});
+        var rec = new Recorder(this.state.mainGain,{workerPath:'https://webaudiodemos.appspot.com/AudioRecorder/js/recorderjs/recorderWorker.js'});
         rec.record();
         setTimeout(async ()=>{
             rec.stop();

@@ -4,6 +4,7 @@
   </div>
   <div *ngFor="let feature of featured;" class="col-xs-3">
     <a (click)="playSong(feature.songId)">
+      <span class="playOverlay"><span class="glyphicon glyphicon-play"></span></span>
     <img class="sub-featured" src="{{feature.imgUrl}}">
     </a>
   </div>

@@ -13,7 +13,7 @@ const users = require('./controllers/user');
 const bands = require('./controllers/band');
 
 app.use(cors({
-  origin: 'http://localhost:3000',
+  origin: 'https://shenkar-band-it.herokuapp.com/',
   credential:true
 }));
 
