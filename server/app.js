@@ -43,6 +43,11 @@ app.get('/songstudio',(req,res) => {
     res.sendFile(path.join(__dirname, 'client-studio/index.html'))
 });
 
+app.get('/bands/:id',(req,res)=> {
+    app.use(express.static(path.join(__dirname, 'client-dash')));
+    res.sendfile(path.join(__dirname, 'client-dash/index.html'))
+});
+
 app.get('/',(req,res)=> {
     app.use(express.static(path.join(__dirname, 'client-dash')));
     res.sendFile(path.join(__dirname, 'client-dash/index.html'))

@@ -214,7 +214,7 @@ class Studio extends Component {
 
     addChannel = () => {
         let channelData = this.state.channelData;
-        let newGainNode = this.context.createGain();
+        let newGainNode = this.state.context.createGain();
         channelData.push({
             'instrument': 'audio',
             'title': 'New Channel',
@@ -567,7 +567,7 @@ class Studio extends Component {
                                                                inputWidth='300px'
                                                                onFocusOut={(text)=>{this.editChannelLabel(text,key)}}
                                                 />
-                                                {channel.audioFiles.length > 0 ? <input className="fileUpload" type='file' id={'upload-ch-'+key} onChange={this.onUpload} /> : ''}
+                                                {channel.audioFiles.length === 0 ? <input className="fileUpload" type='file' id={'upload-ch-'+key} onChange={this.onUpload} /> : ''}
                                                 </p>
                                             <FontAwesomeIcon onClick={(e)=>{this.changeVolume(e,0,key)}} icon={faVolumeMute}/>
                                             <FontAwesomeIcon icon={faHeadphones}/>

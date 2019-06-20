@@ -1329,7 +1329,7 @@ module.exports = ".wrapper{\n  width: 82%;\n  float: right;\n  height: 770px;\n 
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\n    <div class=\"userDiv\">\n          <div class=\"Details\">\n                <h2> {{firstName}} {{lastName}}\n                  <a (click) = \"goToEdit()\">\n                    <span class=\"glyphicon glyphicon-pencil\"></span>\n                  </a>\n                </h2> <br><br>\n                <ul class=\"container details\">\n                  <li><p><span class=\"glyphicon glyphicon-user\"></span> {{firstName}} {{lastName}}</p></li>\n                  <li><p><span class=\"glyphicon glyphicon-envelope one\"></span>{{email}}</p></li>\n                  <li><p><span class=\"glyphicon glyphicon-tag\"></span>{{genre}}</p></li>\n                </ul> <br><br>\n          </div>\n      <div class=\"photo\">\n          <img [src]=\"imageUrl\">\n      </div>\n      <div class=\"clear\"></div>\n    </div>\n"
+module.exports = "\n    <div class=\"userDiv\">\n          <div class=\"Details\">\n                <button (click) = \"logout()\">LOGOUT</button>\n                <h2> {{firstName}} {{lastName}}\n                  <a (click) = \"goToEdit()\">\n                    <span class=\"glyphicon glyphicon-pencil\"></span>\n                  </a>\n                </h2> <br><br>\n                <ul class=\"container details\">\n                  <li><p><span class=\"glyphicon glyphicon-user\"></span> {{firstName}} {{lastName}}</p></li>\n                  <li><p><span class=\"glyphicon glyphicon-envelope one\"></span>{{email}}</p></li>\n                  <li><p><span class=\"glyphicon glyphicon-tag\"></span>{{genre}}</p></li>\n                </ul> <br><br>\n          </div>\n      <div class=\"photo\">\n          <img [src]=\"imageUrl\">\n      </div>\n      <div class=\"clear\"></div>\n    </div>\n"
 
 /***/ }),
 
@@ -1365,6 +1365,11 @@ var ProfileComponent = /** @class */ (function () {
         this._user.user()
             .subscribe(function (data) { console.log(JSON.stringify(data)); _this.addDetails(data); }, function (error) { return console.error(error); });
     }
+    ProfileComponent.prototype.logout = function () {
+        var _this = this;
+        this._user.logout()
+            .subscribe(function (data) { _this._user.updateUserSuccessObj({}); }, function (error) { return console.error(error); });
+    };
     ProfileComponent.prototype.addDetails = function (data) {
         this._id = data._id;
         this.firstName = data.firstName;
@@ -1425,6 +1430,13 @@ var RegisterService = /** @class */ (function () {
     RegisterService.prototype.getUser = function () {
         return this.userData;
     };
+    RegisterService.prototype.logout = function () {
+        return this.http.get('https://shenkar-band-it.herokuapp.com/users/logout', {
+            observe: 'body',
+            withCredentials: true,
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]().append('Content-Type', 'application/json')
+        });
+    };
     RegisterService.prototype.register = function (body) {
         return this.http.post('https://shenkar-band-it.herokuapp.com/users/register', body, {
             observe: 'body',
@@ -1447,13 +1459,6 @@ var RegisterService = /** @class */ (function () {
     };
     RegisterService.prototype.user = function () {
         return this.http.get('https://shenkar-band-it.herokuapp.com/users/getUserData', {
-            observe: 'body',
-            withCredentials: true,
-            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]().append('Content-Type', 'application/json')
-        });
-    };
-    RegisterService.prototype.logout = function () {
-        return this.http.get('http://localhost:3000/user/logout', {
             observe: 'body',
             withCredentials: true,
             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]().append('Content-Type', 'application/json')
@@ -1589,7 +1594,7 @@ module.exports = "#sound-player {\n  position: fixed;\n  width: 100%;\n  bottom:
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div *ngIf=\"!isInit\" id=\"sound-player\">\n  <div class=\"col-md-3\">\n    <div class=\"col-md-3\">\n    <img [src]=\"icon\">\n    </div>\n      <div class=\"col-md-9\">\n    <h3>{{title}}</h3>\n    <p>{{bandName}}</p>\n    </div>\n  </div>\n  <div class=\"col-md-7\">\n    <audio controls [src]=\"currentAudioUrl\" autoplay>\n    </audio>\n  </div>\n  <div class=\"col-md-2\" style=\"text-align:center\">\n    <h3>\n    <span (click)= \"addToFavorite()\" *ngIf=\"!favorited\" class=\"glyphicon glyphicon-heart-empty\"></span>\n      <span *ngIf=\"favorited\" class=\"glyphicon glyphicon-heart\"></span>\n    </h3>\n  </div>\n</div>\n"
+module.exports = "<div *ngIf=\"!isInit\" id=\"sound-player\">\n  <div class=\"col-md-3\">\n    <div class=\"col-md-3\">\n    <img [src]=\"icon\">\n    </div>\n      <div class=\"col-md-9\">\n    <h3>{{title}}</h3>\n    <p>{{bandName}}</p>\n    </div>\n  </div>\n  <div class=\"col-md-7\">\n    <audio controls [src]=\"currentAudioUrl\" autoplay>\n    </audio>\n  </div>\n  <div class=\"col-md-2\" style=\"text-align:center\">\n    <h3 *ngIf=\"isRegistered()\">\n    <span (click)= \"addToFavorite()\" *ngIf=\"!favorited\" class=\"glyphicon glyphicon-heart-empty\"></span>\n      <span *ngIf=\"favorited\" class=\"glyphicon glyphicon-heart\"></span>\n    </h3>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -1607,15 +1612,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _player_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../player.service */ "./src/app/player.service.ts");
 /* harmony import */ var _bands_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../bands.service */ "./src/app/bands.service.ts");
+/* harmony import */ var _register_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../register.service */ "./src/app/register.service.ts");
+
 
 
 
 
 var SoundPlayerComponent = /** @class */ (function () {
-    function SoundPlayerComponent(playerService, bandsService) {
+    function SoundPlayerComponent(playerService, bandsService, registerService) {
         var _this = this;
         this.playerService = playerService;
         this.bandsService = bandsService;
+        this.registerService = registerService;
         this.favorited = false;
         this.isInit = true;
         this.subscription = this.playerService.playAudio().subscribe(function (audio) {
@@ -1633,6 +1641,15 @@ var SoundPlayerComponent = /** @class */ (function () {
         this.bandName = data.bandName;
         this.icon = data.bandIcon;
         this.isInit = false;
+    };
+    SoundPlayerComponent.prototype.isRegistered = function () {
+        var user = this.registerService.getUser();
+        if (user && user._id) {
+            return true;
+        }
+        else {
+            return false;
+        }
     };
     SoundPlayerComponent.prototype.addToFavorite = function () {
         var _this = this;
@@ -1654,7 +1671,7 @@ var SoundPlayerComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./sound-player.component.html */ "./src/app/sound-player/sound-player.component.html"),
             styles: [__webpack_require__(/*! ./sound-player.component.css */ "./src/app/sound-player/sound-player.component.css")]
         }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_player_service__WEBPACK_IMPORTED_MODULE_2__["PlayerService"], _bands_service__WEBPACK_IMPORTED_MODULE_3__["BandsService"]])
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_player_service__WEBPACK_IMPORTED_MODULE_2__["PlayerService"], _bands_service__WEBPACK_IMPORTED_MODULE_3__["BandsService"], _register_service__WEBPACK_IMPORTED_MODULE_4__["RegisterService"]])
     ], SoundPlayerComponent);
     return SoundPlayerComponent;
 }());
