@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs/internal/Observable";
 import {BandsService} from "../bands.service";
 import {NgForm} from "@angular/forms";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-new-band',
@@ -17,7 +18,7 @@ export class NewBandComponent implements OnInit {
   members: String;
   genre: String;
 
-  constructor(private http: HttpClient, private bandsService: BandsService) {
+  constructor(private http: HttpClient, private bandsService: BandsService, private _router:Router) {
   }
 
   ngOnInit() {
@@ -35,15 +36,11 @@ export class NewBandComponent implements OnInit {
         this.goToPage(data);
       },(err) => {
 
-      })
-      // const req = this.http.post<any>("https://shenkar-band-it.herokuapp.com//bands/createNewBand",objReq);
-      // req.subscribe((data)=>{
-      //     window.location.href = 'https://shenkar-band-it.herokuapp.com//bands/'+data._id
-      // })
+      });
   }
 
   goToPage(data) {
-    window.location.href = 'https://shenkar-band-it.herokuapp.com//bands/'+data._id
+    this._router.navigate(['/band/'+data._id]);
   }
 
   onFileChange(event) {

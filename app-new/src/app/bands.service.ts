@@ -12,21 +12,21 @@ export class BandsService {
   }
 
   updateBand(body:any) {
-    return this.http.post('https://shenkar-band-it.herokuapp.com//band/updateBand'  ,body, {
+    return this.http.post('https://shenkar-band-it.herokuapp.com/band/updateBand'  ,body, {
       observe:'body',
       headers: new HttpHeaders().append('Content-Type' , 'application/json')
     });
   }
 
   getSongUrl(body:any) {
-    return this.http.post('https://shenkar-band-it.herokuapp.com//bands/getSongUrl'  ,body, {
+    return this.http.post('https://shenkar-band-it.herokuapp.com/bands/getSongUrl'  ,body, {
       observe:'body',
       headers: new HttpHeaders().append('Content-Type' , 'application/json')
     });
   }
 
   favoriteSong(body:any) {
-    return this.http.post('https://shenkar-band-it.herokuapp.com//bands/favoriteSong'  ,body, {
+    return this.http.post('https://shenkar-band-it.herokuapp.com/bands/favoriteSong'  ,body, {
       observe:'body',
       withCredentials:true,
       headers: new HttpHeaders().append('Content-Type' , 'application/json')
@@ -34,7 +34,7 @@ export class BandsService {
   }
 
   getFavorites() {
-    return this.http.get('https://shenkar-band-it.herokuapp.com//bands/getFavorites'  , {
+    return this.http.get('https://shenkar-band-it.herokuapp.com/bands/getFavorites'  , {
       observe:'body',
       withCredentials:true,
       headers: new HttpHeaders().append('Content-Type' , 'application/json')
@@ -42,7 +42,7 @@ export class BandsService {
   }
 
   createNewBand(body:any) {
-    return this.http.post('https://shenkar-band-it.herokuapp.com//bands/createNewBand'  , body,{
+    return this.http.post('https://shenkar-band-it.herokuapp.com/bands/createNewBand'  , body,{
       observe:'body',
       withCredentials:true,
       headers: new HttpHeaders().append('Content-Type' , 'application/json')
@@ -50,7 +50,7 @@ export class BandsService {
   }
 
   createNewSong(body:any) {
-    return this.http.post('https://shenkar-band-it.herokuapp.com//bands/createNewSong'  , body,{
+    return this.http.post('https://shenkar-band-it.herokuapp.com/bands/createNewSong'  , body,{
       observe:'body',
       withCredentials:true,
       headers: new HttpHeaders().append('Content-Type' , 'application/json')
@@ -58,7 +58,7 @@ export class BandsService {
   }
 
   getBandData(body:any) {
-    return this.http.post('https://shenkar-band-it.herokuapp.com//bands/getBandData'  , body,{
+    return this.http.post('https://shenkar-band-it.herokuapp.com/bands/getBandData'  , body,{
       observe:'body',
       withCredentials:true,
       headers: new HttpHeaders().append('Content-Type' , 'application/json')
@@ -66,7 +66,7 @@ export class BandsService {
   }
 
   getAllSongs() {
-    return this.http.post('https://shenkar-band-it.herokuapp.com//bands/getAllSongs'  ,{},{
+    return this.http.post('https://shenkar-band-it.herokuapp.com/bands/getAllSongs'  ,{},{
       observe:'body',
       withCredentials:true,
       headers: new HttpHeaders().append('Content-Type' , 'application/json')
@@ -74,7 +74,7 @@ export class BandsService {
   }
 
   /*getBands() {
-    return this.http.get('https://shenkar-band-it.herokuapp.com//api/tasks')
+    return this.http.get('https://shenkar-band-it.herokuapp.com/api/tasks')
       .pipe(
         map(res => res.json())
       )
@@ -82,7 +82,7 @@ export class BandsService {
   addBand(newBand){
     var headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    return this.http.post('https://shenkar-band-it.herokuapp.com//api/task' , JSON.stringify(newBand), {headers; headers})
+    return this.http.post('https://shenkar-band-it.herokuapp.com/api/task' , JSON.stringify(newBand), {headers; headers})
       .pipe(
         map( res => res.json())
     )

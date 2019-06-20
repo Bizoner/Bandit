@@ -32,7 +32,10 @@ export class ProfileComponent implements OnInit {
   logout() {
     this._user.logout()
       .subscribe(
-        data => {this._user.updateUserSuccessObj({})},
+        data => {
+          this._user.updateUserSuccessObj({});
+          window.location.href = 'https://shenkar-band-it.herokuapp.com/'
+          },
         error => console.error(error)
       );
   }

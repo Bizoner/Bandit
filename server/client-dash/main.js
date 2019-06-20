@@ -366,7 +366,7 @@ var BandsService = /** @class */ (function () {
         this.http = http;
     }
     BandsService.prototype.updateBand = function (body) {
-        return this.http.post('http://localhost:3000/band/updateBand', body, {
+        return this.http.post('https://shenkar-band-it.herokuapp.com/band/updateBand', body, {
             observe: 'body',
             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]().append('Content-Type', 'application/json')
         });
@@ -898,7 +898,7 @@ module.exports = ".main-featured {\n  width:100%;\n  height:250px;\n  margin-bot
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"col-xs-9\">\n  <div class=\"col-xs-12\">\n    <img class=\"main-featured\" src=\"{{featuredMain.imgUrl}}\">\n  </div>\n  <div *ngFor=\"let feature of featured;\" class=\"col-xs-3\">\n    <a (click)=\"playSong(feature.songId)\">\n    <img class=\"sub-featured\" src=\"{{feature.imgUrl}}\">\n    </a>\n  </div>\n</div>\n<div class=\"col-xs-3\">\n  <div class=\"chart col-xs-12\">\n    <h3><span class=\"glyphicon glyphicon-signal\"></span>TOP 5 SONGS</h3>\n    <div *ngFor=\"let song of topSongs; let i = index\" class=\"col-xs-12 title\">\n      <div class=\"col-xs-1\" style=\"padding-left:10px; padding-right:15px;\">\n        <p>{{i + 1}}</p>\n      </div>\n      <div class=\"col-xs-3\" style=\"padding-left:0\">\n      <img src=\"{{song.imgUrl}}\">\n      </div>\n      <div class=\"col-xs-6\" style=\"padding-left:0\">\n        <p>{{song.bandName}} - {{song.title}}</p>\n      </div>\n    </div>\n  </div>\n  <div class=\"chart col-xs-12\">\n    <h3><span class=\"glyphicon glyphicon-signal\"></span>TOP 5 BANDS</h3>\n    <div *ngFor=\"let band of topBands; let i = index\" class=\"col-xs-12 title\">\n      <div class=\"col-xs-1\" style=\"padding-left:10px; padding-right:15px;\">\n        <p>{{i+1}}</p>\n      </div>\n      <div class=\"col-xs-3\" style=\"padding-left:0\">\n        <img src=\"{{band.imgUrl}}\">\n      </div>\n      <div class=\"col-xs-6\" style=\"padding-left:0\">\n        <p>{{band.bandName}}</p>\n      </div>\n    </div>\n  </div>\n</div>\n"
+module.exports = "<div class=\"col-xs-9\">\n  <div class=\"col-xs-12\">\n    <img class=\"main-featured\" src=\"{{featuredMain.imgUrl}}\">\n  </div>\n  <div *ngFor=\"let feature of featured;\" class=\"col-xs-3\">\n    <a (click)=\"playSong(feature.songId)\">\n      <span class=\"playOverlay\"><span class=\"glyphicon glyphicon-play\"></span></span>\n    <img class=\"sub-featured\" src=\"{{feature.imgUrl}}\">\n    </a>\n  </div>\n</div>\n<div class=\"col-xs-3\">\n  <div class=\"chart col-xs-12\">\n    <h3><span class=\"glyphicon glyphicon-signal\"></span>TOP 5 SONGS</h3>\n    <div *ngFor=\"let song of topSongs; let i = index\" class=\"col-xs-12 title\">\n      <div class=\"col-xs-1\" style=\"padding-left:10px; padding-right:15px;\">\n        <p>{{i + 1}}</p>\n      </div>\n      <div class=\"col-xs-3\" style=\"padding-left:0\">\n      <img src=\"{{song.imgUrl}}\">\n      </div>\n      <div class=\"col-xs-6\" style=\"padding-left:0\">\n        <p>{{song.bandName}} - {{song.title}}</p>\n      </div>\n    </div>\n  </div>\n  <div class=\"chart col-xs-12\">\n    <h3><span class=\"glyphicon glyphicon-signal\"></span>TOP 5 BANDS</h3>\n    <div *ngFor=\"let band of topBands; let i = index\" class=\"col-xs-12 title\">\n      <div class=\"col-xs-1\" style=\"padding-left:10px; padding-right:15px;\">\n        <p>{{i+1}}</p>\n      </div>\n      <div class=\"col-xs-3\" style=\"padding-left:0\">\n        <img src=\"{{band.imgUrl}}\">\n      </div>\n      <div class=\"col-xs-6\" style=\"padding-left:0\">\n        <p>{{band.bandName}}</p>\n      </div>\n    </div>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -1115,7 +1115,7 @@ module.exports = "*{\n  margin: 0px;\n  padding: 0px;\n}\n#logo{\n  display: blo
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<nav id=\"menu\">\n  <a routerLink=\"/index\" id=\"logo\"></a>\n  <ul>\n    <li> <span class=\"glyphicon glyphicon-headphones\"></span> <a routerLink=\"/index\" >EXPLORE</a></li>\n    <li *ngIf=\"isLoggedIn\"> <span class=\"glyphicon glyphicon-signal\"></span> <a routerLink=\"/studio\" >MY STUDIO</a> </li>\n    <li *ngIf=\"isLoggedIn\"> <span class=\"glyphicon glyphicon-heart-empty\"></span> <a routerLink=\"/favoriets\" >FAVORITES</a> </li>\n\n    <li class=\"line\" > <span class=\"glyphicon glyphicon-music\"></span> <a routerLink=\"/board\" >THE BOARD</a> </li>\n    <li *ngFor=\"let band of bands\" style=\"color:white;\">\n      <a routerLink=\"{{'/band/'+band._id}}\">\n        <img [src]=\"band.icon\" style=\"width: 30px;margin-right: 5px;\">\n        {{band.name}}\n      </a>\n    </li>\n    <li *ngIf=\"isLoggedIn\" class=\"line\" ><span class=\"glyphicon glyphicon-plus-sign\"></span><a routerLink=\"/new-band\" >CREATE NEW BAND</a> </li>\n    <!--<li ><span class=\"glyphicon glyphicon-plus-sign\"></span><a routerLink=\"/invite-friend\" >INVITE A FRIEND</a> </li>-->\n\n\n    <li *ngIf=\"isLoggedIn\" ><span class=\"glyphicon glyphicon-user\"></span><a routerLink=\"/profile/:id\">MY PROFILE</a> </li>\n  </ul>\n</nav>\n\n\n\n"
+module.exports = "<nav id=\"menu\">\n  <a routerLink=\"/index\" id=\"logo\"></a>\n  <ul>\n    <li> <span class=\"glyphicon glyphicon-headphones\"></span> <a routerLink=\"/index\" >EXPLORE</a></li>\n    <li *ngIf=\"isLoggedIn\"> <span class=\"glyphicon glyphicon-signal\"></span> <a routerLink=\"/studio\" >MY STUDIO</a> </li>\n    <li *ngIf=\"isLoggedIn\"> <span class=\"glyphicon glyphicon-heart-empty\"></span> <a routerLink=\"/favoriets\" >FAVORITES</a> </li>\n\n    <li class=\"line\" > <span class=\"glyphicon glyphicon-music\"></span> <a routerLink=\"/board\" >THE BOARD</a> </li>\n    <li *ngFor=\"let band of bands\" style=\"color:white;\">\n      <a routerLink=\"{{'/band/'+band._id}}\">\n        <img [src]=\"band.icon\" style=\"width: 30px;margin-right: 5px;\">\n        {{band.name}}\n      </a>\n    </li>\n    <li *ngIf=\"isLoggedIn\" class=\"line\" ><span class=\"glyphicon glyphicon-plus-sign\"></span><a routerLink=\"/new-band\" >CREATE NEW BAND</a> </li>\n    <!--<li ><span class=\"glyphicon glyphicon-plus-sign\"></span><a routerLink=\"/invite-friend\" >INVITE A FRIEND</a> </li>-->\n\n\n    <li *ngIf=\"isLoggedIn\" ><span class=\"glyphicon glyphicon-user\"></span><a routerLink=\"/profile\">MY PROFILE</a> </li>\n  </ul>\n</nav>\n\n\n\n"
 
 /***/ }),
 
@@ -1210,14 +1210,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
 /* harmony import */ var _bands_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../bands.service */ "./src/app/bands.service.ts");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+
 
 
 
 
 var NewBandComponent = /** @class */ (function () {
-    function NewBandComponent(http, bandsService) {
+    function NewBandComponent(http, bandsService, _router) {
         this.http = http;
         this.bandsService = bandsService;
+        this._router = _router;
     }
     NewBandComponent.prototype.ngOnInit = function () {
     };
@@ -1234,13 +1237,9 @@ var NewBandComponent = /** @class */ (function () {
             _this.goToPage(data);
         }, function (err) {
         });
-        // const req = this.http.post<any>("https://shenkar-band-it.herokuapp.com/bands/createNewBand",objReq);
-        // req.subscribe((data)=>{
-        //     window.location.href = 'https://shenkar-band-it.herokuapp.com/bands/'+data._id
-        // })
     };
     NewBandComponent.prototype.goToPage = function (data) {
-        window.location.href = 'https://shenkar-band-it.herokuapp.com/bands/' + data._id;
+        this._router.navigate(['/band/' + data._id]);
     };
     NewBandComponent.prototype.onFileChange = function (event) {
         var _this = this;
@@ -1263,7 +1262,7 @@ var NewBandComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./new-band.component.html */ "./src/app/new-band/new-band.component.html"),
             styles: [__webpack_require__(/*! ./new-band.component.css */ "./src/app/new-band/new-band.component.css")]
         }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"], _bands_service__WEBPACK_IMPORTED_MODULE_3__["BandsService"]])
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"], _bands_service__WEBPACK_IMPORTED_MODULE_3__["BandsService"], _angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"]])
     ], NewBandComponent);
     return NewBandComponent;
 }());
@@ -1368,7 +1367,10 @@ var ProfileComponent = /** @class */ (function () {
     ProfileComponent.prototype.logout = function () {
         var _this = this;
         this._user.logout()
-            .subscribe(function (data) { _this._user.updateUserSuccessObj({}); }, function (error) { return console.error(error); });
+            .subscribe(function (data) {
+            _this._user.updateUserSuccessObj({});
+            window.location.href = 'https://shenkar-band-it.herokuapp.com/';
+        }, function (error) { return console.error(error); });
     };
     ProfileComponent.prototype.addDetails = function (data) {
         this._id = data._id;
@@ -1445,7 +1447,7 @@ var RegisterService = /** @class */ (function () {
     };
     RegisterService.prototype.updateUser = function (body) {
         console.log('hi from service');
-        return this.http.post('http://localhost:3000/user/updateUser', body, {
+        return this.http.post('https://shenkar-band-it.herokuapp.com/user/updateUser', body, {
             observe: 'body',
             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]().append('Content-Type', 'application/json')
         });
@@ -1594,7 +1596,7 @@ module.exports = "#sound-player {\n  position: fixed;\n  width: 100%;\n  bottom:
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div *ngIf=\"!isInit\" id=\"sound-player\">\n  <div class=\"col-md-3\">\n    <div class=\"col-md-3\">\n    <img [src]=\"icon\">\n    </div>\n      <div class=\"col-md-9\">\n    <h3>{{title}}</h3>\n    <p>{{bandName}}</p>\n    </div>\n  </div>\n  <div class=\"col-md-7\">\n    <audio controls [src]=\"currentAudioUrl\" autoplay>\n    </audio>\n  </div>\n  <div class=\"col-md-2\" style=\"text-align:center\">\n    <h3 *ngIf=\"isRegistered()\">\n    <span (click)= \"addToFavorite()\" *ngIf=\"!favorited\" class=\"glyphicon glyphicon-heart-empty\"></span>\n      <span *ngIf=\"favorited\" class=\"glyphicon glyphicon-heart\"></span>\n    </h3>\n  </div>\n</div>\n"
+module.exports = "<div *ngIf=\"!isInit\" id=\"sound-player\">\n  <div class=\"col-md-3\">\n    <div class=\"col-md-3\">\n    <img [src]=\"icon\">\n    </div>\n      <div class=\"col-md-9\">\n    <h3>{{title}}</h3>\n    <p>{{bandName}}</p>\n    </div>\n  </div>\n  <div class=\"col-md-7\">\n    <audio controls [src]=\"currentAudioUrl\" autoplay>\n    </audio>\n  </div>\n  <div class=\"col-md-2\" style=\"text-align:center\">\n    <h3 *ngIf=\"isLoggedIn()\">\n    <span (click)= \"addToFavorite()\" *ngIf=\"!favorited\" class=\"glyphicon glyphicon-heart-empty\"></span>\n      <span *ngIf=\"favorited\" class=\"glyphicon glyphicon-heart\"></span>\n    </h3>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -1642,7 +1644,7 @@ var SoundPlayerComponent = /** @class */ (function () {
         this.icon = data.bandIcon;
         this.isInit = false;
     };
-    SoundPlayerComponent.prototype.isRegistered = function () {
+    SoundPlayerComponent.prototype.isLoggedIn = function () {
         var user = this.registerService.getUser();
         if (user && user._id) {
             return true;

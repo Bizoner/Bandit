@@ -42,7 +42,7 @@ export class SoundPlayerComponent implements OnInit {
     this.isInit = false;
   }
 
-  isRegistered () {
+  isLoggedIn () {
     const user = this.registerService.getUser();
     if (user && user._id) {
       return true;

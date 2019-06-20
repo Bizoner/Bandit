@@ -34,7 +34,7 @@ export class EditBandComponent implements OnInit {
       this.id = params['id'];
     });
 
-    const req = this.http.post<any>("https://shenkar-band-it.herokuapp.com//bands/getBandData",{id: this.id});
+    const req = this.http.post<any>("https://shenkar-band-it.herokuapp.com/bands/getBandData",{id: this.id});
     req.subscribe((data)=>{
       this.bandData = data;
 
