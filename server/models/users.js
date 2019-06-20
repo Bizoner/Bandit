@@ -12,7 +12,7 @@ var UsersSchema = new Schema({
     cDate : {type: Date, default: Date.now()},
     lmDate : {type: Date, default: Date.now()},
     isLooking : {type: Boolean, default: false},
-    instrument : {type: String, enum : ["Guitar","Vocal","Bass","Drums"]},
+    instrument : {type: String},
     favorites: [ObjectId]
 });
 
