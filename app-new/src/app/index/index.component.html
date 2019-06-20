@@ -2,10 +2,12 @@
   <div class="col-xs-12">
     <img class="main-featured" src="{{featuredMain.imgUrl}}">
   </div>
-  <div *ngFor="let feature of featured;" class="col-xs-3">
+  <div *ngFor="let feature of featured;" class="col-xs-3 hov-container">
     <a (click)="playSong(feature.songId)">
-      <span class="playOverlay"><span class="glyphicon glyphicon-play"></span></span>
     <img class="sub-featured" src="{{feature.imgUrl}}">
+      <div class="playButton">
+        <span class="glyphicon glyphicon-play"></span>
+      </div>
     </a>
   </div>
 </div>

@@ -15,6 +15,7 @@ export class MenuComponent implements OnInit {
   bands : any = [];
   subscription: Subscription;
   isLoggedIn: Boolean = false;
+  uId : String;
   constructor(private registerService: RegisterService, private http: HttpClient) {
     this.registerService.user().subscribe(data => {
       this.updateBands(data);
@@ -29,6 +30,7 @@ export class MenuComponent implements OnInit {
 
   updateBands(data) {
     this.isLoggedIn = true;
+    this.uId = data._id;
     this.bands = data.bands;
   }
   ngOnInit() {
