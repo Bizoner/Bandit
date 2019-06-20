@@ -23,6 +23,8 @@ function isAuthenticated(req,res,next) {
     else return res.status(401).json({message: 'Invalid Request'});
 }
 
+
+router.post('/logout',(req,res) => {req.logout(); res.redirect('/')});
 router.get('/getUserData',isAuthenticated, user_controller.getUserData);
 router.post('/register',
     cloudinary.uploadBase64Cloudinary,

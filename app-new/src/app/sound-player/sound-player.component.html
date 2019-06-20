@@ -13,7 +13,7 @@
     </audio>
   </div>
   <div class="col-md-2" style="text-align:center">
-    <h3>
+    <h3 *ngIf="isRegistered()">
     <span (click)= "addToFavorite()" *ngIf="!favorited" class="glyphicon glyphicon-heart-empty"></span>
       <span *ngIf="favorited" class="glyphicon glyphicon-heart"></span>
     </h3>

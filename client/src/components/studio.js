@@ -79,6 +79,8 @@ class Studio extends Component {
             } else {
                 that.setState({loading: false});
             }
+        }).catch((err) => {
+            window.alert(err);
         });
 
     }
@@ -211,9 +213,8 @@ class Studio extends Component {
     };
 
     addChannel = () => {
-        //TODO Create context and gain node
-        console.log("add channel")
         let channelData = this.state.channelData;
+        let newGainNode = this.context.createGain();
         channelData.push({
             'instrument': 'audio',
             'title': 'New Channel',
@@ -224,7 +225,8 @@ class Studio extends Component {
                 reverb:0,
             },
             'audioFiles': [],
-            'new': true
+            'new': true,
+            'gainNode': newGainNode
         });
         this.setState({channelData})
     };
@@ -299,7 +301,7 @@ class Studio extends Component {
         formData.append('key',this.state.key);
         formData.append('length',this.state.length);
         axios.post('https://shenkar-band-it.herokuapp.com/studio/saveDataInStudio',formData).then((res)=>{
-            window.alert(res);
+            window.alert('Song Saved!');
             this.setState({loading:false})
         })
     };
@@ -309,7 +311,7 @@ class Studio extends Component {
         const length = this.updateSongLength();
         await this.playAll(true);
         console.log('mainGain: ',this.state.mainGain);
-        var rec = new Recorder(this.state.mainGain);
+        var rec = new Recorder(this.state.mainGain,{workerPath:'../recorderWorker.js'});
         rec.record();
         setTimeout(async ()=>{
             rec.stop();
@@ -326,6 +328,9 @@ class Studio extends Component {
         formData.append('export',file);
         formData.append('songId',this.state.songId);
         axios.post('https://shenkar-band-it.herokuapp.com/studio/exportSong',formData).then((res)=>{
+            if (res.data.lastExportedUrl) {
+                this.setState({lastExportedUrl:res.data.lastExportedUrl});
+            }
             this.setState({saving:false});
         })
     }
@@ -562,7 +567,7 @@ class Studio extends Component {
                                                                inputWidth='300px'
                                                                onFocusOut={(text)=>{this.editChannelLabel(text,key)}}
                                                 />
-                                                <input className="fileUpload" type='file' id={'upload-ch-'+key} onChange={this.onUpload} />
+                                                {channel.audioFiles.length > 0 ? <input className="fileUpload" type='file' id={'upload-ch-'+key} onChange={this.onUpload} /> : ''}
                                                 </p>
                                             <FontAwesomeIcon onClick={(e)=>{this.changeVolume(e,0,key)}} icon={faVolumeMute}/>
                                             <FontAwesomeIcon icon={faHeadphones}/>

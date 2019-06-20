@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { PlayerService } from "../player.service";
 import { BandsService} from "../bands.service";
+import { RegisterService} from "../register.service";
 
 @Component({
   selector: 'app-sound-player',
@@ -19,7 +20,7 @@ export class SoundPlayerComponent implements OnInit {
   icon: String;
   isInit: Boolean = true;
 
-  constructor(private playerService: PlayerService, private bandsService: BandsService) {
+  constructor(private playerService: PlayerService, private bandsService: BandsService, private registerService: RegisterService) {
     this.subscription = this.playerService.playAudio().subscribe(audio => {
       this.songId = audio.songId;
       this.bandsService.getSongUrl(audio).subscribe(
@@ -39,6 +40,15 @@ export class SoundPlayerComponent implements OnInit {
     this.bandName = data.bandName;
     this.icon = data.bandIcon;
     this.isInit = false;
+  }
+
+  isRegistered () {
+    const user = this.registerService.getUser();
+    if (user && user._id) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   addToFavorite() {

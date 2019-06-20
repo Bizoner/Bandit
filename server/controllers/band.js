@@ -1,6 +1,7 @@
 var UsersModel = require('../models/users').UsersModel;
 var BandsModel = require('../models/bands').BandsModel;
 var SongsModel = require('../models/songs').SongsModel;
+var ChannelsModel = require('../models/channels').ChannelsModel;
 
 function getBandData (req,res,next) {
     if (!req.body.id) return next('missingid');
@@ -62,7 +63,10 @@ function createNewSong (req,res,next) {
     if (!req.user || !req.user._id) return next('missingid');
     SongsModel.addNewSong(req.body.id,(err,song)=> {
         if (err) return next(err);
-        res.json({_id: song._id});
+        ChannelsModel.addNewChannel({instrument: 'guitar', title: 'New Channel', songId: song._id, audioFiles:[]},(err) => {
+            if (err) return next(err);
+            res.json({_id: song._id});
+        });
     })
 }
 

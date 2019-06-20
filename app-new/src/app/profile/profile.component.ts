@@ -28,6 +28,15 @@ export class ProfileComponent implements OnInit {
         error => console.error(error)
        );
   }
+
+  logout() {
+    this._user.logout()
+      .subscribe(
+        data => {this._user.updateUserSuccessObj({})},
+        error => console.error(error)
+      );
+  }
+
   addDetails(data){
     this._id = data._id;
     this.firstName = data.firstName;

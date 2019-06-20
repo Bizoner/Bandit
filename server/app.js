@@ -6,8 +6,7 @@ var bodyParser = require('body-parser');
 var app = express();
 var cors = require("cors");
 const passport = require('passport');
-app.use(cors({credentials: true, origin: 'http://localhost:4200'}))
-
+app.use(cors({credentials: true, origin: 'http://localhost:3000'}))
 // Express Session
 app.use(session({
     secret: 'secret',
@@ -33,7 +32,7 @@ mongoose.Promise = global.Promise;
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 app.use(bodyParser.urlencoded({extended: false}));
-app.use(bodyParser.json());
+app.use(bodyParser.json({limit: '10mb'}));
 app.use('/studio', studio);
 app.use('/users',user);
 app.use('/bands',band);
@@ -41,17 +40,12 @@ app.use('/index',index);
 
 app.get('/songstudio',(req,res) => {
     app.use(express.static(path.join(__dirname, 'client-studio')));
-    res.sendfile(path.join(__dirname, 'client-studio/index.html'))
+    res.sendFile(path.join(__dirname, 'client-studio/index.html'))
 });
 
 app.get('/',(req,res)=> {
     app.use(express.static(path.join(__dirname, 'client-dash')));
-    res.sendfile(path.join(__dirname, 'client-dash/index.html'))
-});
-
-app.get('/bands/:id',(req,res)=> {
-    app.use(express.static(path.join(__dirname, 'client-dash')));
-    res.sendfile(path.join(__dirname, 'client-dash/index.html'))
+    res.sendFile(path.join(__dirname, 'client-dash/index.html'))
 });
 
 app.listen(process.env.PORT || 3003, () => {

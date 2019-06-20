@@ -28,6 +28,14 @@ export class RegisterService {
     return this.userData;
   }
 
+  logout(){
+    return this.http.get('https://shenkar-band-it.herokuapp.com/users/logout',{
+      observe:'body',
+      withCredentials:true,
+      headers: new HttpHeaders().append('Content-Type' , 'application/json')
+    });
+  }
+
   register(body:any){
       return this.http.post('https://shenkar-band-it.herokuapp.com/users/register',body,{
         observe:'body',
@@ -58,13 +66,6 @@ export class RegisterService {
     });
   }
 
-  logout(){
-    return this.http.get('http://localhost:3000/user/logout',{
-      observe:'body',
-      withCredentials:true,
-      headers: new HttpHeaders().append('Content-Type' , 'application/json')
-    });
-  }
 }
 
 
