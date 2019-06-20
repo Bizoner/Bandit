@@ -24,7 +24,7 @@ function isAuthenticated(req,res,next) {
 }
 
 
-router.post('/logout',(req,res) => {req.logout(); res.redirect('/')});
+router.get('/logout',(req,res) => {req.logout(); res.redirect('/')});
 router.get('/getUserData',isAuthenticated, user_controller.getUserData);
 router.post('/register',
     cloudinary.uploadBase64Cloudinary,
