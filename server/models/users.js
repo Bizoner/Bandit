@@ -6,7 +6,7 @@ var UsersSchema = new Schema({
     firstName : String,
     lastName : String,
     icon : String,
-    email : String,
+    email : {type: String,unique:true},
     pass : String,
     genre : {type: String, enum: ["Rock","Punk","Classic"]},
     cDate : {type: Date, default: Date.now()},

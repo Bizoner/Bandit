@@ -6,7 +6,7 @@ var bodyParser = require('body-parser');
 var app = express();
 var cors = require("cors");
 const passport = require('passport');
-app.use(cors({credentials: true, origin: 'http://localhost:3000'}))
+app.use(cors({credentials: true}))
 // Express Session
 app.use(session({
     secret: 'secret',
@@ -42,6 +42,20 @@ app.use('/index',index);
 app.use('/songstudio',express.static(path.join(__dirname, 'client-studio')));
 app.use(express.static(path.join(__dirname, 'client-dash')));
 
+app.use(function (req, res, next) {
+    res.sendfile(path.join(__dirname, 'client-dash/index.html'))
+});
+
+// DEV
+//
+// app.use('/songstudio',express.static(path.join(__dirname, '../client/build')));
+// app.use(express.static(path.join(__dirname, '../app-new/dist/app-new')));
+//
+// app.use(function (req, res, next) {
+//     res.sendfile(path.join(__dirname, '../app-new/dist/app-new/index.html'))
+// });
+
+
 //
 // app.get('/songstudio',(req,res) => {
 //     app.use(express.static(path.join(__dirname, 'client-studio')));
@@ -52,10 +66,6 @@ app.use(express.static(path.join(__dirname, 'client-dash')));
 //     app.use(express.static(path.join(__dirname, 'client-dash')));
 //     res.sendfile(path.join(__dirname, 'client-dash/index.html'))
 // });
-
-app.use(function (req, res, next) {
-    res.sendfile(path.join(__dirname, 'client-dash/index.html'))
-});
 
 //
 // app.get('/',(req,res)=> {

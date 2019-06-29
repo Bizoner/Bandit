@@ -1,9 +1,11 @@
+<div *ngIf="loading" class="spinner-border" role="status"></div>
+<div *ngIf="!loading">
 <div class="col-xs-12">
 <div class="col-xs-5" style="padding: 0 20px;">
   <img style="width:100%; height: 300px" src="{{bandData.icon}}">
 </div>
 <div class="col-xs-7" style="padding: 0 20px;">
-  <h1>{{bandData.name}} <a routerLink="{{'/editBand/'+bandData._id}}"><span style="font-size:14px;" class="glyphicon glyphicon-pencil"></span></a></h1>
+  <h1>{{bandData.name}} <a *ngIf="bandData.isAdmin" routerLink="{{'/editBand/'+bandData._id}}"><span style="font-size:14px;" class="glyphicon glyphicon-pencil"></span></a></h1>
   <p><span style="margin:10px 0px; font-size:14px;" class="glyphicon glyphicon-tag"></span>Rock</p>
   <p style="font-size:16px;">{{bandData.description}}</p>
 </div>
@@ -19,15 +21,18 @@
     <h2>SONGS</h2>
     <div *ngFor="let song of bandData.songs">
       <p style="margin:15px 0px; font-size: 16px; background: #07072f38; padding: 10px;">
-        <img style="border-radius:50%; width:60px; margin-right:10px;" src={{bandData.icon}}>{{song.title}}
-        <a href="{{'/songstudio/?id='+song._id}}">
-          <span style="margin-left:10px" class="glyphicon glyphicon-edit"></span>
+        <a *ngIf=song.lastExportedUrl (click)="playSong(song._id)">
+          <span style="margin-left:10px" class="glyphicon glyphicon-play"></span>
         </a>
+        <a href="{{'/songstudio/?id='+song._id}}">
+          <span style="margin:0 10px;" class="glyphicon glyphicon-edit"></span>
+        </a>
+       {{song.title}}
       </p>
     </div>
     <div>
 
-      <p style="margin:15px 0px; font-size: 16px; background: #07072f38; padding: 10px;">
+      <p *ngIf="bandData.isAdmin" style="margin:15px 0px; font-size: 16px; background: #07072f38; padding: 10px;">
         <a (click)="createNewSong()">
           <span style="margin-left:10px" class="glyphicon glyphicon-plus"></span>
           Create New Song
@@ -35,6 +40,7 @@
       </p>
     </div>
   </div>
+</div>
 </div>
  <!--<main>-->
     <!--<div class="topBand">-->

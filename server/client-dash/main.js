@@ -267,7 +267,7 @@ module.exports = "*{\n  margin: 0px;\n  padding: 0px;\n}\n\nbody{\n  height:100%
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"col-xs-12\">\n<div class=\"col-xs-5\" style=\"padding: 0 20px;\">\n  <img style=\"width:100%; height: 300px\" src=\"{{bandData.icon}}\">\n</div>\n<div class=\"col-xs-7\" style=\"padding: 0 20px;\">\n  <h1>{{bandData.name}} <a routerLink=\"{{'/editBand/'+bandData._id}}\"><span style=\"font-size:14px;\" class=\"glyphicon glyphicon-pencil\"></span></a></h1>\n  <p><span style=\"margin:10px 0px; font-size:14px;\" class=\"glyphicon glyphicon-tag\"></span>Rock</p>\n  <p style=\"font-size:16px;\">{{bandData.description}}</p>\n</div>\n</div>\n<div class=\"col-xs-12\" style=\"margin-top:30px;\">\n  <div class=\"col-xs-5\" style=\"padding: 0 20px;\">\n    <h2 style=\"margin-bottom:20px;\">MEMBERS</h2>\n    <div *ngFor=\"let member of bandData.members\">\n      <p style=\"margin:15px 0px; font-size: 16px;\"><img style=\"border-radius:50%; width:60px; margin-right:10px;\" src={{member.icon}}>{{member.firstName}} {{member.lastName}}</p>\n    </div>\n  </div>\n  <div class=\"col-xs-7\" style=\"padding: 0 20px;\">\n    <h2>SONGS</h2>\n    <div *ngFor=\"let song of bandData.songs\">\n      <p style=\"margin:15px 0px; font-size: 16px; background: #07072f38; padding: 10px;\">\n        <img style=\"border-radius:50%; width:60px; margin-right:10px;\" src={{bandData.icon}}>{{song.title}}\n        <a href=\"{{'/songstudio/?id='+song._id}}\">\n          <span style=\"margin-left:10px\" class=\"glyphicon glyphicon-edit\"></span>\n        </a>\n      </p>\n    </div>\n    <div>\n\n      <p style=\"margin:15px 0px; font-size: 16px; background: #07072f38; padding: 10px;\">\n        <a (click)=\"createNewSong()\">\n          <span style=\"margin-left:10px\" class=\"glyphicon glyphicon-plus\"></span>\n          Create New Song\n        </a>\n      </p>\n    </div>\n  </div>\n</div>\n <!--<main>-->\n    <!--<div class=\"topBand\">-->\n      <!--<img src={{bandData.icon}}>-->\n      <!--<section>-->\n        <!--<h3>{{bandData.name}}-->\n          <!--<a (click)=\"goToEdit()\">-->\n            <!--<span class=\"glyphicon glyphicon-pencil\"></span>-->\n          <!--</a>-->\n        <!--</h3><br>-->\n\n        <!--<h5> <span class=\"glyphicon glyphicon-tag\"></span> {{bandData.genre}} </h5>-->\n        <!--<p>{{bandData.description}}</p>-->\n      <!--</section>-->\n\n      <!--<nav class=\"members\">-->\n        <!--<h3>MEMBERS</h3>-->\n        <!--<nav *ngFor=\"let member of bandData.members\">-->\n          <!--<img src={{member.icon}}> <P>{{member.firstName}} {{member.lastName}}</P>-->\n        <!--</nav>-->\n      <!--</nav>-->\n      <!--<nav class=\"songs\">-->\n        <!--<h3>SONGS</h3>-->\n        <!--<nav *ngFor=\"let song of bandData.songs\">-->\n          <!--<a href=\"{{'/songstudio/?id='+song._id}}\">-->\n            <!--<img src={{bandData.icon}}>-->\n            <!--<p>{{song.title}}</p>-->\n          <!--</a>-->\n        <!--</nav>-->\n        <!--<nav>-->\n            <!--<p (click)=\"createNewSong()\">Create New Song</p>-->\n        <!--</nav>-->\n      <!--</nav>-->\n        <!--<div class=\"clear\"></div>-->\n    <!--</div>-->\n  <!--</main>-->\n"
+module.exports = "<div *ngIf=\"loading\" class=\"spinner-border\" role=\"status\"></div>\n<div *ngIf=\"!loading\">\n<div class=\"col-xs-12\">\n<div class=\"col-xs-5\" style=\"padding: 0 20px;\">\n  <img style=\"width:100%; height: 300px\" src=\"{{bandData.icon}}\">\n</div>\n<div class=\"col-xs-7\" style=\"padding: 0 20px;\">\n  <h1>{{bandData.name}} <a *ngIf=\"bandData.isAdmin\" routerLink=\"{{'/editBand/'+bandData._id}}\"><span style=\"font-size:14px;\" class=\"glyphicon glyphicon-pencil\"></span></a></h1>\n  <p><span style=\"margin:10px 0px; font-size:14px;\" class=\"glyphicon glyphicon-tag\"></span>Rock</p>\n  <p style=\"font-size:16px;\">{{bandData.description}}</p>\n</div>\n</div>\n<div class=\"col-xs-12\" style=\"margin-top:30px;\">\n  <div class=\"col-xs-5\" style=\"padding: 0 20px;\">\n    <h2 style=\"margin-bottom:20px;\">MEMBERS</h2>\n    <div *ngFor=\"let member of bandData.members\">\n      <p style=\"margin:15px 0px; font-size: 16px;\"><img style=\"border-radius:50%; width:60px; margin-right:10px;\" src={{member.icon}}>{{member.firstName}} {{member.lastName}}</p>\n    </div>\n  </div>\n  <div class=\"col-xs-7\" style=\"padding: 0 20px;\">\n    <h2>SONGS</h2>\n    <div *ngFor=\"let song of bandData.songs\">\n      <p style=\"margin:15px 0px; font-size: 16px; background: #07072f38; padding: 10px;\">\n        <a *ngIf=song.lastExportedUrl (click)=\"playSong(song._id)\">\n          <span style=\"margin-left:10px\" class=\"glyphicon glyphicon-play\"></span>\n        </a>\n        <a href=\"{{'/songstudio/?id='+song._id}}\">\n          <span style=\"margin:0 10px;\" class=\"glyphicon glyphicon-edit\"></span>\n        </a>\n       {{song.title}}\n      </p>\n    </div>\n    <div>\n\n      <p *ngIf=\"bandData.isAdmin\" style=\"margin:15px 0px; font-size: 16px; background: #07072f38; padding: 10px;\">\n        <a (click)=\"createNewSong()\">\n          <span style=\"margin-left:10px\" class=\"glyphicon glyphicon-plus\"></span>\n          Create New Song\n        </a>\n      </p>\n    </div>\n  </div>\n</div>\n</div>\n <!--<main>-->\n    <!--<div class=\"topBand\">-->\n      <!--<img src={{bandData.icon}}>-->\n      <!--<section>-->\n        <!--<h3>{{bandData.name}}-->\n          <!--<a (click)=\"goToEdit()\">-->\n            <!--<span class=\"glyphicon glyphicon-pencil\"></span>-->\n          <!--</a>-->\n        <!--</h3><br>-->\n\n        <!--<h5> <span class=\"glyphicon glyphicon-tag\"></span> {{bandData.genre}} </h5>-->\n        <!--<p>{{bandData.description}}</p>-->\n      <!--</section>-->\n\n      <!--<nav class=\"members\">-->\n        <!--<h3>MEMBERS</h3>-->\n        <!--<nav *ngFor=\"let member of bandData.members\">-->\n          <!--<img src={{member.icon}}> <P>{{member.firstName}} {{member.lastName}}</P>-->\n        <!--</nav>-->\n      <!--</nav>-->\n      <!--<nav class=\"songs\">-->\n        <!--<h3>SONGS</h3>-->\n        <!--<nav *ngFor=\"let song of bandData.songs\">-->\n          <!--<a href=\"{{'/songstudio/?id='+song._id}}\">-->\n            <!--<img src={{bandData.icon}}>-->\n            <!--<p>{{song.title}}</p>-->\n          <!--</a>-->\n        <!--</nav>-->\n        <!--<nav>-->\n            <!--<p (click)=\"createNewSong()\">Create New Song</p>-->\n        <!--</nav>-->\n      <!--</nav>-->\n        <!--<div class=\"clear\"></div>-->\n    <!--</div>-->\n  <!--</main>-->\n"
 
 /***/ }),
 
@@ -287,6 +287,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 /* harmony import */ var _bands_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../bands.service */ "./src/app/bands.service.ts");
 /* harmony import */ var _player_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../player.service */ "./src/app/player.service.ts");
+/* harmony import */ var _register_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../register.service */ "./src/app/register.service.ts");
+
 
 
 
@@ -294,8 +296,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var BandComponent = /** @class */ (function () {
-    function BandComponent(http, route, router, bandsService, playerService) {
+    function BandComponent(loginService, http, route, router, bandsService, playerService) {
         var _this = this;
+        this.loginService = loginService;
         this.http = http;
         this.route = route;
         this.router = router;
@@ -305,10 +308,13 @@ var BandComponent = /** @class */ (function () {
         this.route.params.subscribe(function (params) {
             _this.bandId = params['id'];
         });
+        this.loading = true;
         this.bandsService.getBandData({ id: this.bandId }).subscribe(function (data) {
             _this.bandData = data;
+            _this.loading = false;
         }, function (err) {
-            console.error(err);
+            _this.loading = false;
+            _this.loadingError = err.error;
         });
     }
     BandComponent.prototype.createNewSong = function () {
@@ -320,7 +326,7 @@ var BandComponent = /** @class */ (function () {
         });
     };
     BandComponent.prototype.redirectToStudio = function (data) {
-        window.location.href = 'https://shenkar-band-it.herokuapp.com/songstudio/?id=' + data._id;
+        window.location.href = 'http://localhost:3003/songstudio/?id=' + data._id;
     };
     BandComponent.prototype.playSong = function (songId) {
         var audioObj = {
@@ -336,7 +342,7 @@ var BandComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./band.component.html */ "./src/app/band/band.component.html"),
             styles: [__webpack_require__(/*! ./band.component.css */ "./src/app/band/band.component.css")]
         }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"], _angular_router__WEBPACK_IMPORTED_MODULE_3__["ActivatedRoute"], _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"], _bands_service__WEBPACK_IMPORTED_MODULE_4__["BandsService"], _player_service__WEBPACK_IMPORTED_MODULE_5__["PlayerService"]])
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_register_service__WEBPACK_IMPORTED_MODULE_6__["RegisterService"], _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"], _angular_router__WEBPACK_IMPORTED_MODULE_3__["ActivatedRoute"], _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"], _bands_service__WEBPACK_IMPORTED_MODULE_4__["BandsService"], _player_service__WEBPACK_IMPORTED_MODULE_5__["PlayerService"]])
     ], BandComponent);
     return BandComponent;
 }());
@@ -366,54 +372,54 @@ var BandsService = /** @class */ (function () {
         this.http = http;
     }
     BandsService.prototype.updateBand = function (body) {
-        return this.http.post('https://shenkar-band-it.herokuapp.com/band/updateBand', body, {
+        return this.http.post('http://localhost:3003/band/updateBand', body, {
             observe: 'body',
             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]().append('Content-Type', 'application/json')
         });
     };
     BandsService.prototype.getSongUrl = function (body) {
-        return this.http.post('https://shenkar-band-it.herokuapp.com/bands/getSongUrl', body, {
+        return this.http.post('http://localhost:3003/bands/getSongUrl', body, {
             observe: 'body',
             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]().append('Content-Type', 'application/json')
         });
     };
     BandsService.prototype.favoriteSong = function (body) {
-        return this.http.post('https://shenkar-band-it.herokuapp.com/bands/favoriteSong', body, {
+        return this.http.post('http://localhost:3003/bands/favoriteSong', body, {
             observe: 'body',
             withCredentials: true,
             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]().append('Content-Type', 'application/json')
         });
     };
     BandsService.prototype.getFavorites = function () {
-        return this.http.get('https://shenkar-band-it.herokuapp.com/bands/getFavorites', {
+        return this.http.get('http://localhost:3003/bands/getFavorites', {
             observe: 'body',
             withCredentials: true,
             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]().append('Content-Type', 'application/json')
         });
     };
     BandsService.prototype.createNewBand = function (body) {
-        return this.http.post('https://shenkar-band-it.herokuapp.com/bands/createNewBand', body, {
+        return this.http.post('http://localhost:3003/bands/createNewBand', body, {
             observe: 'body',
             withCredentials: true,
             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]().append('Content-Type', 'application/json')
         });
     };
     BandsService.prototype.createNewSong = function (body) {
-        return this.http.post('https://shenkar-band-it.herokuapp.com/bands/createNewSong', body, {
+        return this.http.post('http://localhost:3003/bands/createNewSong', body, {
             observe: 'body',
             withCredentials: true,
             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]().append('Content-Type', 'application/json')
         });
     };
     BandsService.prototype.getBandData = function (body) {
-        return this.http.post('https://shenkar-band-it.herokuapp.com/bands/getBandData', body, {
+        return this.http.post('http://localhost:3003/bands/getBandData', body, {
             observe: 'body',
             withCredentials: true,
             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]().append('Content-Type', 'application/json')
         });
     };
     BandsService.prototype.getAllSongs = function () {
-        return this.http.post('https://shenkar-band-it.herokuapp.com/bands/getAllSongs', {}, {
+        return this.http.post('http://localhost:3003/bands/getAllSongs', {}, {
             observe: 'body',
             withCredentials: true,
             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]().append('Content-Type', 'application/json')
@@ -548,7 +554,7 @@ var EditBandComponent = /** @class */ (function () {
         this.route.params.subscribe(function (params) {
             _this.id = params['id'];
         });
-        var req = this.http.post("https://shenkar-band-it.herokuapp.com/bands/getBandData", { id: this.id });
+        var req = this.http.post("http://localhost:3003/bands/getBandData", { id: this.id });
         req.subscribe(function (data) {
             _this.bandData = data;
             console.log('The edit Bands data: ' + JSON.stringify(_this.bandData));
@@ -862,7 +868,7 @@ var IndexService = /** @class */ (function () {
         this.http = http;
     }
     IndexService.prototype.getIndexData = function () {
-        return this.http.get('https://shenkar-band-it.herokuapp.com/index/getIndexData', {
+        return this.http.get('http://localhost:3003/index/getIndexData', {
             observe: 'body',
             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]().append('Content-Type', 'application/json')
         });
@@ -1035,7 +1041,7 @@ module.exports = "body {\n  padding-top: 90px;\n}\n.panel-login {\n  border-colo
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!------ Include the above in your HEAD tag ---------->\n<body>\n      <div class=\"container\">\n        <div class=\"row\">\n          <div class=\"col-md-6 col-md-offset-3\">\n            <div class=\"panel panel-login\">\n              <div class=\"panel-heading\">\n                <div class=\"row\">\n                  <div class=\"col-xs-6\">\n                    <a href=\"#\" class=\"active\" id=\"login-form-link\">Login</a>\n                  </div>\n                  <div class=\"col-xs-6\">\n                    <a routerLink=\"/register\"  id=\"register-form-link\">Register</a>\n                  </div>\n                </div>\n                <hr>\n              </div>\n              <div class=\"panel-body\">\n                <div class=\"row\">\n                  <div class=\"col-lg-12\">\n                    <form [formGroup]=\"loginForm\">\n                      <div class=\"form-group\">\n                        <input type=\"text\" formControlName=\"email\" name=\"username\" id=\"username\" tabindex=\"1\" class=\"form-control\" placeholder=\"Username\" value=\"\">\n                      </div>\n                      <div class=\"form-group\">\n                        <input formControlName=\"pass\" type=\"password\" name=\"password\" id=\"password\" tabindex=\"2\" class=\"form-control\" placeholder=\"Password\">\n                      </div>\n                      <div class=\"form-group text-center\">\n                        <input type=\"checkbox\" tabindex=\"3\" class=\"\" name=\"remember\" id=\"remember\">\n                        <label for=\"remember\"> Remember Me</label>\n                      </div>\n                      <div class=\"form-group\">\n                        <div class=\"row\">\n                          <div class=\"col-sm-6 col-sm-offset-3\">\n                            <input (click)=\"login()\" type=\"submit\"  name=\"login-submit\" id=\"login-submit\" tabindex=\"4\" class=\"form-control btn btn-login\" value=\"Log In\">\n                          </div>\n                        </div>\n                      </div>\n                      <div class=\"form-group\">\n                        <div class=\"row\">\n                          <div class=\"col-lg-12\">\n                            <div class=\"text-center\">\n                              <a tabindex=\"5\" class=\"forgot-password\">Forgot Password?</a>\n                            </div>\n                          </div>\n                        </div>\n                      </div>\n                    </form>\n                  </div>\n                </div>\n              </div>\n            </div>\n          </div>\n        </div>\n      </div>\n</body>\n"
+module.exports = "<!------ Include the above in your HEAD tag ---------->\n<!--<body>-->\n      <!--<div class=\"container\">-->\n        <!--<div class=\"row\">-->\n          <div class=\"col-md-6 col-md-offset-3\">\n            <div class=\"panel panel-login\">\n              <div class=\"panel-heading\">\n                <div class=\"row\">\n                  <div class=\"col-xs-6\">\n                    <a href=\"#\" class=\"active\" id=\"login-form-link\">Login</a>\n                  </div>\n                  <div class=\"col-xs-6\">\n                    <a routerLink=\"/register\"  id=\"register-form-link\">Register</a>\n                  </div>\n                </div>\n                <hr>\n              </div>\n              <div class=\"panel-body\">\n                <div class=\"row\">\n                  <div class=\"col-lg-12\">\n                    <form [formGroup]=\"loginForm\">\n                      <div class=\"form-group\">\n                        <input type=\"text\" formControlName=\"email\" name=\"username\" id=\"username\" tabindex=\"1\" class=\"form-control\" placeholder=\"Username\" value=\"\">\n                        <div *ngIf=\"submitted && loginForm.controls.email.invalid\" class=\"alert alert-danger\">\n                          <div *ngIf=\"loginForm.controls.email.errors.required\">\n                            Email is required.\n                          </div>\n                        </div>\n                      </div>\n                      <div class=\"form-group\">\n                        <input formControlName=\"pass\" type=\"password\" name=\"password\" id=\"password\" tabindex=\"2\" class=\"form-control\" placeholder=\"Password\">\n                        <div *ngIf=\"submitted && loginForm.controls.pass.invalid\" class=\"alert alert-danger\">\n                          <div *ngIf=\"loginForm.controls.pass.errors.required\">\n                            Password is required.\n                          </div>\n                        </div>\n                      </div>\n                      <div class=\"form-group\">\n                        <div class=\"row\">\n                          <div class=\"col-sm-6 col-sm-offset-3\">\n                            <div *ngIf=\"loading\" class=\"spinner-border\" role=\"status\"></div>\n                            <input *ngIf=\"!loading\" (click)=\"login()\" type=\"submit\"  name=\"login-submit\" id=\"login-submit\" tabindex=\"4\" class=\"form-control btn btn-login\" value=\"Log In\">\n                            <div *ngIf=\"submitError\" class=\"alert alert-danger\">\n                              Login Error : {{submitError}}\n                            </div>\n                          </div>\n                        </div>\n                      </div>\n                    </form>\n                  </div>\n                </div>\n              </div>\n            </div>\n          </div>\n        <!--</div>-->\n      <!--</div>-->\n<!--</body>-->\n"
 
 /***/ }),
 
@@ -1070,15 +1076,17 @@ var LoginComponent = /** @class */ (function () {
     }
     LoginComponent.prototype.login = function () {
         var _this = this;
+        this.submitted = true;
         if (!this.loginForm.valid) {
             console.log('Invalid Form');
             return;
         }
+        this.loading = true;
         this.login_s.login(JSON.stringify(this.loginForm.value))
             .subscribe(function (data) {
             _this.login_s.updateUserSuccessObj(data);
             _this._router.navigate(['/index']);
-        }, function (error) { return console.error(error); });
+        }, function (error) { _this.loading = false; _this.submitError = error.error; });
     };
     LoginComponent.prototype.ngOnInit = function () {
     };
@@ -1182,7 +1190,7 @@ var MenuComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "*{\n  display: block;\n}\nform{\n  width: 100%;\n}\ntextarea{\n  width: 50%;\n}\ninput{\n  font-size:14px;\n  width: 50%;\n}\nselect{\n  width: 50%;\n}\nlabel {\n  font-size: 14px;\n}\n.custom-file-label{\n  width: 50%;\n}\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvbmV3LWJhbmQvbmV3LWJhbmQuY29tcG9uZW50LmNzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNFLGNBQWM7QUFDaEI7QUFDQTtFQUNFLFdBQVc7QUFDYjtBQUNBO0VBQ0UsVUFBVTtBQUNaO0FBQ0E7RUFDRSxjQUFjO0VBQ2QsVUFBVTtBQUNaO0FBQ0E7RUFDRSxVQUFVO0FBQ1o7QUFFQTtFQUNFLGVBQWU7QUFDakI7QUFDQTtFQUNFLFVBQVU7QUFDWiIsImZpbGUiOiJzcmMvYXBwL25ldy1iYW5kL25ldy1iYW5kLmNvbXBvbmVudC5jc3MiLCJzb3VyY2VzQ29udGVudCI6WyIqe1xuICBkaXNwbGF5OiBibG9jaztcbn1cbmZvcm17XG4gIHdpZHRoOiAxMDAlO1xufVxudGV4dGFyZWF7XG4gIHdpZHRoOiA1MCU7XG59XG5pbnB1dHtcbiAgZm9udC1zaXplOjE0cHg7XG4gIHdpZHRoOiA1MCU7XG59XG5zZWxlY3R7XG4gIHdpZHRoOiA1MCU7XG59XG5cbmxhYmVsIHtcbiAgZm9udC1zaXplOiAxNHB4O1xufVxuLmN1c3RvbS1maWxlLWxhYmVse1xuICB3aWR0aDogNTAlO1xufVxuIl19 */"
+module.exports = "*{\n  display: block;\n}\nform{\n  width: 100%;\n}\ninput{\n  font-size:14px;\n  width: 100%;\n}\nselect{\n  width: 100%;\n}\nlabel {\n  font-size: 14px;\n}\n.custom-file-label{\n  width: 100%;\n}\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvbmV3LWJhbmQvbmV3LWJhbmQuY29tcG9uZW50LmNzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNFLGNBQWM7QUFDaEI7QUFDQTtFQUNFLFdBQVc7QUFDYjtBQUNBO0VBQ0UsY0FBYztFQUNkLFdBQVc7QUFDYjtBQUNBO0VBQ0UsV0FBVztBQUNiO0FBRUE7RUFDRSxlQUFlO0FBQ2pCO0FBQ0E7RUFDRSxXQUFXO0FBQ2IiLCJmaWxlIjoic3JjL2FwcC9uZXctYmFuZC9uZXctYmFuZC5jb21wb25lbnQuY3NzIiwic291cmNlc0NvbnRlbnQiOlsiKntcbiAgZGlzcGxheTogYmxvY2s7XG59XG5mb3Jte1xuICB3aWR0aDogMTAwJTtcbn1cbmlucHV0e1xuICBmb250LXNpemU6MTRweDtcbiAgd2lkdGg6IDEwMCU7XG59XG5zZWxlY3R7XG4gIHdpZHRoOiAxMDAlO1xufVxuXG5sYWJlbCB7XG4gIGZvbnQtc2l6ZTogMTRweDtcbn1cbi5jdXN0b20tZmlsZS1sYWJlbHtcbiAgd2lkdGg6IDEwMCU7XG59XG4iXX0= */"
 
 /***/ }),
 
@@ -1193,7 +1201,7 @@ module.exports = "*{\n  display: block;\n}\nform{\n  width: 100%;\n}\ntextarea{\
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"col-xs-12\">\n      <h1>Add New Band</h1>\n      <form (ngSubmit)=\"onSubmit()\">\n          <label> Band name: </label> <input type=\"text\" [(ngModel)]=\"name\" name=\"bandName\"><br>\n          <label> Genre: </label>\n            <select [(ngModel)]=\"genre\" name=\"genre\">\n              <option> Rock </option>\n              <option> Punk </option>\n              <option> Jazz </option>\n            </select><br>\n          <label> Description: </label>\n          <textarea [(ngModel)]=\"description\" name=\"description\"></textarea><br>\n        <label> Members Emails (seperated by comma): </label> <input type=\"text\" [(ngModel)]=\"members\" name=\"members\"><br>\n          <div class=\"custom-file mb-3\">\n            <input  (change)=\"onFileChange($event)\" type=\"file\" ngModel name=\"icon\" class=\"custom-file-input\">\n            <label for=\"file\" class=\"custom-file-label\"> Add band photo </label><br>\n          </div><br>\n          <input type=\"submit\" value=\"Submit\" class=\"btn btn-primary\">\n      </form>\n</div>\n"
+module.exports = "<!--<div class=\"col-xs-12\">-->\n  <div class=\"col-md-6\" style=\"margin:0 auto\">\n      <h1>Add New Band</h1>\n      <form (ngSubmit)=\"onSubmit()\">\n        <div class=\"form-group\">\n        <label> Band name: </label>\n        <input class=\"form-control\" type=\"text\" [(ngModel)]=\"name\" name=\"bandName\">\n        <div *ngIf=\"submitted && !name\" class=\"alert alert-danger\">\n          <div>Band name is required</div></div>\n        <br>\n          <label> Genre: </label>\n            <select class=\"form-control\" [(ngModel)]=\"genre\" name=\"genre\">\n              <option> Rock </option>\n              <option> Punk </option>\n              <option> Jazz </option>\n            </select><br>\n          <div *ngIf=\"submitted && !genre\" class=\"alert alert-danger\">\n            <div>Genre is required</div></div>\n          <label> Description: </label>\n          <textarea class=\"form-control\" [(ngModel)]=\"description\" name=\"description\"></textarea><br>\n        <label> Members Emails (seperated by comma): </label>\n        <input type=\"text\" class=\"form-control\" [(ngModel)]=\"members\" name=\"members\"><br>\n          <div class=\"custom-file mb-3\">\n            <input  (change)=\"onFileChange($event)\" type=\"file\" ngModel name=\"icon\" class=\"custom-file-input\">\n            <label for=\"file\" class=\"custom-file-label\"> {{file && file.filename || \"Add band photo\"}} </label>\n          </div><br>\n          <div *ngIf=\"submitted && !file\" class=\"alert alert-danger\">\n            <div>Band Image is required</div></div>\n          <br>\n          <input *ngIf=\"!loading\" type=\"submit\" value=\"Submit\" class=\"btn btn-primary\">\n          <div *ngIf=\"loading\" class=\"spinner-border\" role=\"status\"></div>\n           <div *ngIf=\"submitError\" class=\"alert alert-danger\">\n            Create Band Error : {{submitError}}\n          </div>\n\n        </div>\n      </form>\n  </div>\n<!--</div>-->\n"
 
 /***/ }),
 
@@ -1227,6 +1235,10 @@ var NewBandComponent = /** @class */ (function () {
     };
     NewBandComponent.prototype.onSubmit = function () {
         var _this = this;
+        this.submitted = true;
+        if (!this.name || !this.genre || !this.file) {
+            return;
+        }
         var objReq = {
             name: this.name,
             description: this.description,
@@ -1234,9 +1246,12 @@ var NewBandComponent = /** @class */ (function () {
             genre: this.genre,
             file: this.file,
         };
+        this.loading = true;
         this.bandsService.createNewBand(objReq).subscribe(function (data) {
             _this.goToPage(data);
         }, function (err) {
+            _this.loading = false;
+            _this.submitError = err.error;
         });
     };
     NewBandComponent.prototype.goToPage = function (data) {
@@ -1370,7 +1385,7 @@ var ProfileComponent = /** @class */ (function () {
         this._user.logout()
             .subscribe(function (data) {
             _this._user.updateUserSuccessObj({});
-            window.location.href = 'https://shenkar-band-it.herokuapp.com/';
+            window.location.href = 'http://localhost:3003/';
         }, function (error) { return console.error(error); });
     };
     ProfileComponent.prototype.addDetails = function (data) {
@@ -1379,6 +1394,7 @@ var ProfileComponent = /** @class */ (function () {
         this.lastName = data.lastName;
         this.genre = data.genre;
         this.email = data.email;
+        this.imageUrl = data.icon;
     };
     ProfileComponent.prototype.ngOnInit = function () {
     };
@@ -1434,34 +1450,34 @@ var RegisterService = /** @class */ (function () {
         return this.userData;
     };
     RegisterService.prototype.logout = function () {
-        return this.http.get('https://shenkar-band-it.herokuapp.com/users/logout', {
+        return this.http.get('http://localhost:3003/users/logout', {
             observe: 'body',
             withCredentials: true,
             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]().append('Content-Type', 'application/json')
         });
     };
     RegisterService.prototype.register = function (body) {
-        return this.http.post('https://shenkar-band-it.herokuapp.com/users/register', body, {
+        return this.http.post('http://localhost:3003/users/register', body, {
             observe: 'body',
             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]().append('Content-Type', 'application/json')
         });
     };
     RegisterService.prototype.updateUser = function (body) {
         console.log('hi from service');
-        return this.http.post('https://shenkar-band-it.herokuapp.com/user/updateUser', body, {
+        return this.http.post('http://localhost:3003/user/updateUser', body, {
             observe: 'body',
             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]().append('Content-Type', 'application/json')
         });
     };
     RegisterService.prototype.login = function (body) {
-        return this.http.post('https://shenkar-band-it.herokuapp.com/users/login', body, {
+        return this.http.post('http://localhost:3003/users/login', body, {
             observe: 'body',
             withCredentials: true,
             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]().append('Content-Type', 'application/json')
         });
     };
     RegisterService.prototype.user = function () {
-        return this.http.get('https://shenkar-band-it.herokuapp.com/users/getUserData', {
+        return this.http.get('http://localhost:3003/users/getUserData', {
             observe: 'body',
             withCredentials: true,
             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]().append('Content-Type', 'application/json')
@@ -1498,7 +1514,7 @@ module.exports = "body {\n  padding-top: 90px;\n}\n.panel-login {\n  border-colo
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\n<link href=\"//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css\" rel=\"stylesheet\" id=\"bootstrap-css\">\n<script src=\"//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js\"></script>\n<script src=\"//code.jquery.com/jquery-1.11.1.min.js\"></script>\n<!------ Include the above in your HEAD tag ---------->\n<body class=\"container\">\n  <div class=\"row\">\n    <div class=\"col-md-6 col-md-offset-3\">\n      <div class=\"panel panel-login\">\n        <div class=\"panel-heading\">\n          <div class=\"row\">\n            <div class=\"col-xs-6\">\n              <a routerLink=\"/login\"  id=\"login-form-link\">Login</a>\n            </div>\n            <div class=\"col-xs-6\">\n              <a routerLink=\"/register\"  class=\"active\" id=\"register-form-link\">Register</a>\n            </div>\n          </div>\n          <hr>\n        </div>\n        <div class=\"panel-body\">\n          <div class=\"row\">\n            <div class=\"col-lg-12\">\n              <form [formGroup]=\"registerForm\" id=\"register-form\"  method=\"post\" role=\"form\" style=\"display: block;\">\n                <div class=\"form-group\">\n                  <input type=\"text\" formControlName=\"firstName\"  tabindex=\"1\" class=\"form-control\" placeholder=\"Firstname\" value=\"\">\n                </div>\n                <div class=\"form-group\">\n                  <input type=\"text\" formControlName=\"lastName\"  tabindex=\"1\" class=\"form-control\" placeholder=\"Lastname\" value=\"\">\n                </div>\n                <div class=\"form-group\">\n                  <select formControlName=\"genre\"  tabindex=\"1\" class=\"form-control\" placeholder=\"Genre\" value=\"\">\n                    <option value=\"\" disabled selected>Select your style</option>\n                    <option> Rock </option>\n                    <option> Punk </option>\n                    <option> Classic </option>\n                  </select>\n                </div>\n                <div class=\"form-group\">\n                  <select formControlName=\"instrument\"  tabindex=\"1\" class=\"form-control\" placeholder=\"Instrument\" value=\"\">\n                    <option value=\"\" disabled selected>Select your instrument</option>\n                    <option> Guitar </option>\n                    <option> Drums </option>\n                    <option> Vocals </option>\n                    <option> Bass </option>\n                  </select>\n                </div>\n                <div class=\"form-group\">\n                  <input type=\"email\" formControlName=\"email\"  tabindex=\"1\" class=\"form-control\" placeholder=\"Email Address\" value=\"\">\n                </div>\n                <div class=\"form-group\">\n                  <input type=\"password\" formControlName=\"pass\"  tabindex=\"2\" class=\"form-control\" placeholder=\"Password\">\n                </div>\n                <div class=\"form-group\">\n                  <input type=\"password\" formControlName=\"cpass\"  tabindex=\"2\" class=\"form-control\" placeholder=\"Confirm Password\">\n                </div>\n                <div class=\"form-group\">\n                  <input (change)=\"onFileChange($event)\" type=\"file\" formControlName=\"file\"  tabindex=\"1\" class=\"form-control\" placeholder=\"Upload Profile Image\">\n                </div>\n                <div class=\"form-group\">\n                  <div class=\"row\">\n                    <div class=\"col-sm-6 col-sm-offset-3\">\n                      <input  (click)=\"register()\" type=\"submit\" class=\"form-control btn btn-register\" value=\"Register Now\">\n                    </div>\n                  </div>\n                </div>\n              </form>\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n</body>\n"
+module.exports = "\n<!--<link href=\"//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css\" rel=\"stylesheet\" id=\"bootstrap-css\">-->\n<!--<script src=\"//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js\"></script>-->\n<!--<script src=\"//code.jquery.com/jquery-1.11.1.min.js\"></script>-->\n<!------ Include the above in your HEAD tag ---------->\n<!--<body class=\"container\">-->\n  <!--<div class=\"row\">-->\n    <div class=\"col-md-6 col-md-offset-3\">\n      <div class=\"panel panel-login\">\n        <div class=\"panel-heading\">\n          <div class=\"row\">\n            <div class=\"col-xs-6\">\n              <a routerLink=\"/login\"  id=\"login-form-link\">Login</a>\n            </div>\n            <div class=\"col-xs-6\">\n              <a routerLink=\"/register\"  class=\"active\" id=\"register-form-link\">Register</a>\n            </div>\n          </div>\n          <hr>\n        </div>\n        <div class=\"panel-body\">\n          <div class=\"row\">\n            <div class=\"col-lg-12\">\n              <form [formGroup]=\"registerForm\" id=\"register-form\"  method=\"post\" role=\"form\" style=\"display: block;\">\n                <div class=\"form-group\">\n                  <input type=\"text\" formControlName=\"firstName\"  tabindex=\"1\" class=\"form-control\" placeholder=\"Firstname\">\n                    <div *ngIf=\"submitted && registerForm.controls.firstName.invalid\" class=\"alert alert-danger\">\n                      <div *ngIf=\"registerForm.controls.firstName.errors.required\">\n                        Firstname is required.\n                      </div>\n                    </div>\n                </div>\n                <div class=\"form-group\">\n                  <input type=\"text\" formControlName=\"lastName\"  tabindex=\"1\" class=\"form-control\" placeholder=\"Lastname\" value=\"\">\n                  <div *ngIf=\"submitted && registerForm.controls.lastName.invalid\" class=\"alert alert-danger\">\n                    <div *ngIf=\"registerForm.controls.lastName.errors.required\">\n                      Lastname is required.\n                    </div>\n                  </div>\n                </div>\n                <div class=\"form-group\">\n                  <label style=\"font-size: 14px; color: #6c757d; padding-left:5px;\">Select your genre:</label>\n                  <select formControlName=\"genre\"  tabindex=\"1\" class=\"form-control\" placeholder=\"Genre\">\n                    <option value=\"\" disabled selected>Select your style</option>\n                    <option> Rock </option>\n                    <option> Punk </option>\n                    <option> Classic </option>\n                  </select>\n                  <div *ngIf=\"submitted && registerForm.controls.genre.invalid\" class=\"alert alert-danger\">\n                    <div *ngIf=\"registerForm.controls.genre.errors.required\">\n                      Genre is required.\n                    </div>\n                  </div>\n                </div>\n                <div class=\"form-group\">\n                  <label style=\"font-size: 14px; color: #6c757d; padding-left:5px;\">Select your instrument:</label>\n                  <select formControlName=\"instrument\"  tabindex=\"1\" class=\"form-control\" placeholder=\"Instrument\" value=\"\">\n                    <option value=\"\" disabled selected>Select your instrument</option>\n                    <option> Guitar </option>\n                    <option> Drums </option>\n                    <option> Vocals </option>\n                    <option> Bass </option>\n                  </select>\n                  <div *ngIf=\"submitted && registerForm.controls.instrument.invalid\" class=\"alert alert-danger\">\n                    <div *ngIf=\"registerForm.controls.instrument.errors.required\">\n                      Instrument is required.\n                    </div>\n                  </div>\n                </div>\n                <div class=\"form-group\">\n                  <input type=\"email\" formControlName=\"email\"  tabindex=\"1\" class=\"form-control\" placeholder=\"Email Address\" value=\"\">\n                  <div *ngIf=\"submitted && registerForm.controls.email.invalid\" class=\"alert alert-danger\">\n                    <div *ngIf=\"registerForm.controls.email.errors.required\">\n                      Email is required.\n                    </div>\n                    <div *ngIf=\"registerForm.controls.email.errors.email\">\n                      Invalid Email.\n                    </div>\n                  </div>\n                </div>\n                <div class=\"form-group\">\n                  <input type=\"password\" formControlName=\"pass\"  tabindex=\"2\" class=\"form-control\" placeholder=\"Password\">\n                  <div *ngIf=\"submitted && registerForm.controls.pass.invalid\" class=\"alert alert-danger\">\n                    <div *ngIf=\"registerForm.controls.pass.errors.required\">\n                      Password is required.\n                    </div>\n                  </div>\n                </div>\n                <div class=\"form-group\">\n                  <input type=\"password\" formControlName=\"cpass\"  tabindex=\"2\" class=\"form-control\" placeholder=\"Confirm Password\">\n                  <div *ngIf=\"submitted && (registerForm.controls.cpass.invalid || wrongConfirmation)\" class=\"alert alert-danger\">\n                    <div *ngIf=\"registerForm.controls.cpass.errors.required || wrongConfirmation\">\n                      Wrong or missing confirmation, Type passwords again\n                    </div>\n                  </div>\n                </div>\n                <div class=\"form-group\">\n                  <label style=\"font-size: 14px; color: #6c757d; padding-left:5px;\">Choose Profile Image:</label>\n                  <input (change)=\"onFileChange($event)\" type=\"file\" formControlName=\"file\"  tabindex=\"1\" class=\"form-control\" placeholder=\"Upload Profile Image\">\n                  <div *ngIf=\"submitted && registerForm.controls.file.invalid\" class=\"alert alert-danger\">\n                    <div *ngIf=\"registerForm.controls.file.errors.required\">\n                      Image is required.\n                    </div>\n                  </div>\n                </div>\n                <div class=\"form-group\">\n                  <div class=\"row\">\n                    <div class=\"col-sm-6 col-sm-offset-3\" style=\"text-align:center;\">\n                      <div *ngIf=\"loading\" class=\"spinner-border\" role=\"status\"></div>\n                      <input *ngIf=\"!loading\" (click)=\"register()\" type=\"submit\" class=\"form-control btn btn-register\" value=\"Register Now\">\n                      <div *ngIf=\"submitError\" class=\"alert alert-danger\">\n                        Error Creating a user : {{submitError}}\n                      </div>\n                    </div>\n                  </div>\n                </div>\n              </form>\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n  <!--</div>-->\n<!--</body>-->\n"
 
 /***/ }),
 
@@ -1527,27 +1543,36 @@ var RegisterComponent = /** @class */ (function () {
         this._router = _router;
         this.register_s = register_s;
         this.registerForm = new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormGroup"]({
-            firstName: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"](null, _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required),
-            lastName: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"](null, _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required),
-            email: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"](null, [_angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].email, _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required]),
-            genre: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"](null, _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required),
-            instrument: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"](null, _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required),
-            pass: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"](null, _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required),
-            cpass: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"](null, _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required),
-            file: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"](null, _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required),
+            firstName: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"](this.firstName, _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required),
+            lastName: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"](this.lastName, _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required),
+            email: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"](this.email, [_angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].email, _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required]),
+            genre: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"](this.genre, _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required),
+            instrument: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"](this.instrument, _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required),
+            pass: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"](this.pass, _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required),
+            cpass: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"](this.cpass, _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required),
+            file: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"](this.file, _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required),
         });
     }
     RegisterComponent.prototype.ngOnInit = function () {
     };
     RegisterComponent.prototype.register = function () {
         var _this = this;
-        if (!this.registerForm.valid || (this.registerForm.controls.pass.value != this.registerForm.controls.cpass.value)) {
-            console.log('Invalid Form');
+        console.log(this.firstName);
+        this.submitted = true;
+        if (!this.registerForm.valid) {
             return;
         }
+        if (this.registerForm.controls.pass.value != this.registerForm.controls.cpass.value) {
+            this.wrongConfirmation = true;
+            return;
+        }
+        else {
+            this.wrongConfirmation = false;
+        }
         this.registerForm.value.file = this.file;
+        this.loading = true;
         this.register_s.register(JSON.stringify(this.registerForm.value))
-            .subscribe(function (data) { console.log(data); _this.register_s.updateUserSuccessObj(data); _this._router.navigate(['/index']); }, function (error) { return console.error(error); });
+            .subscribe(function (data) { _this.register_s.updateUserSuccessObj(data); _this._router.navigate(['/index']); }, function (error) { _this.loading = false; _this.submitError = error.error; });
     };
     RegisterComponent.prototype.onFileChange = function (event) {
         var _this = this;
@@ -1597,7 +1622,7 @@ module.exports = "#sound-player {\n  position: fixed;\n  width: 100%;\n  bottom:
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div *ngIf=\"!isInit\" id=\"sound-player\">\n  <div class=\"col-md-3\">\n    <div class=\"col-md-3\">\n    <img [src]=\"icon\">\n    </div>\n      <div class=\"col-md-9\">\n    <h3>{{title}}</h3>\n    <p>{{bandName}}</p>\n    </div>\n  </div>\n  <div class=\"col-md-7\">\n    <audio controls [src]=\"currentAudioUrl\" autoplay>\n    </audio>\n  </div>\n  <div class=\"col-md-2\" style=\"text-align:center\">\n    <h3 *ngIf=\"isLoggedIn()\">\n    <span (click)= \"addToFavorite()\" *ngIf=\"!favorited\" class=\"glyphicon glyphicon-heart-empty\"></span>\n      <span *ngIf=\"favorited\" class=\"glyphicon glyphicon-heart\"></span>\n    </h3>\n  </div>\n</div>\n"
+module.exports = "<div *ngIf=\"!isInit\" id=\"sound-player\">\n  <div class=\"col-md-3\">\n    <div class=\"col-md-3\">\n    <img [src]=\"icon\">\n    </div>\n      <div class=\"col-md-9\">\n    <h3>{{title}}</h3>\n    <p>{{bandName}}</p>\n    </div>\n  </div>\n  <div class=\"col-md-7\">\n    <audio controls [src]=\"currentAudioUrl\" autoplay>\n    </audio>\n  </div>\n  <div class=\"col-md-2\" style=\"text-align:center\">\n    <h3>\n    <span (click)= \"addToFavorite()\" *ngIf=\"!favorited\" class=\"glyphicon glyphicon-heart-empty\"></span>\n      <span *ngIf=\"favorited\" class=\"glyphicon glyphicon-heart\"></span>\n    </h3>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -1644,15 +1669,6 @@ var SoundPlayerComponent = /** @class */ (function () {
         this.bandName = data.bandName;
         this.icon = data.bandIcon;
         this.isInit = false;
-    };
-    SoundPlayerComponent.prototype.isLoggedIn = function () {
-        var user = this.registerService.getUser();
-        if (user && user._id) {
-            return true;
-        }
-        else {
-            return false;
-        }
     };
     SoundPlayerComponent.prototype.addToFavorite = function () {
         var _this = this;

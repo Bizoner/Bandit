@@ -42,15 +42,6 @@ export class SoundPlayerComponent implements OnInit {
     this.isInit = false;
   }
 
-  isLoggedIn () {
-    const user = this.registerService.getUser();
-    if (user && user._id) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
   addToFavorite() {
     this.bandsService.favoriteSong({songId: this.songId}).subscribe(
       data => {

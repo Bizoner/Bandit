@@ -1,10 +1,10 @@
 
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<!--<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">-->
+<!--<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>-->
+<!--<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>-->
 <!------ Include the above in your HEAD tag ---------->
-<body class="container">
-  <div class="row">
+<!--<body class="container">-->
+  <!--<div class="row">-->
     <div class="col-md-6 col-md-offset-3">
       <div class="panel panel-login">
         <div class="panel-heading">
@@ -23,20 +23,37 @@
             <div class="col-lg-12">
               <form [formGroup]="registerForm" id="register-form"  method="post" role="form" style="display: block;">
                 <div class="form-group">
-                  <input type="text" formControlName="firstName"  tabindex="1" class="form-control" placeholder="Firstname" value="">
+                  <input type="text" formControlName="firstName"  tabindex="1" class="form-control" placeholder="Firstname">
+                    <div *ngIf="submitted && registerForm.controls.firstName.invalid" class="alert alert-danger">
+                      <div *ngIf="registerForm.controls.firstName.errors.required">
+                        Firstname is required.
+                      </div>
+                    </div>
                 </div>
                 <div class="form-group">
                   <input type="text" formControlName="lastName"  tabindex="1" class="form-control" placeholder="Lastname" value="">
+                  <div *ngIf="submitted && registerForm.controls.lastName.invalid" class="alert alert-danger">
+                    <div *ngIf="registerForm.controls.lastName.errors.required">
+                      Lastname is required.
+                    </div>
+                  </div>
                 </div>
                 <div class="form-group">
-                  <select formControlName="genre"  tabindex="1" class="form-control" placeholder="Genre" value="">
+                  <label style="font-size: 14px; color: #6c757d; padding-left:5px;">Select your genre:</label>
+                  <select formControlName="genre"  tabindex="1" class="form-control" placeholder="Genre">
                     <option value="" disabled selected>Select your style</option>
                     <option> Rock </option>
                     <option> Punk </option>
                     <option> Classic </option>
                   </select>
+                  <div *ngIf="submitted && registerForm.controls.genre.invalid" class="alert alert-danger">
+                    <div *ngIf="registerForm.controls.genre.errors.required">
+                      Genre is required.
+                    </div>
+                  </div>
                 </div>
                 <div class="form-group">
+                  <label style="font-size: 14px; color: #6c757d; padding-left:5px;">Select your instrument:</label>
                   <select formControlName="instrument"  tabindex="1" class="form-control" placeholder="Instrument" value="">
                     <option value="" disabled selected>Select your instrument</option>
                     <option> Guitar </option>
@@ -44,23 +61,56 @@
                     <option> Vocals </option>
                     <option> Bass </option>
                   </select>
+                  <div *ngIf="submitted && registerForm.controls.instrument.invalid" class="alert alert-danger">
+                    <div *ngIf="registerForm.controls.instrument.errors.required">
+                      Instrument is required.
+                    </div>
+                  </div>
                 </div>
                 <div class="form-group">
                   <input type="email" formControlName="email"  tabindex="1" class="form-control" placeholder="Email Address" value="">
+                  <div *ngIf="submitted && registerForm.controls.email.invalid" class="alert alert-danger">
+                    <div *ngIf="registerForm.controls.email.errors.required">
+                      Email is required.
+                    </div>
+                    <div *ngIf="registerForm.controls.email.errors.email">
+                      Invalid Email.
+                    </div>
+                  </div>
                 </div>
                 <div class="form-group">
                   <input type="password" formControlName="pass"  tabindex="2" class="form-control" placeholder="Password">
+                  <div *ngIf="submitted && registerForm.controls.pass.invalid" class="alert alert-danger">
+                    <div *ngIf="registerForm.controls.pass.errors.required">
+                      Password is required.
+                    </div>
+                  </div>
                 </div>
                 <div class="form-group">
                   <input type="password" formControlName="cpass"  tabindex="2" class="form-control" placeholder="Confirm Password">
+                  <div *ngIf="submitted && (registerForm.controls.cpass.invalid || wrongConfirmation)" class="alert alert-danger">
+                    <div *ngIf="registerForm.controls.cpass.errors.required || wrongConfirmation">
+                      Wrong or missing confirmation, Type passwords again
+                    </div>
+                  </div>
                 </div>
                 <div class="form-group">
+                  <label style="font-size: 14px; color: #6c757d; padding-left:5px;">Choose Profile Image:</label>
                   <input (change)="onFileChange($event)" type="file" formControlName="file"  tabindex="1" class="form-control" placeholder="Upload Profile Image">
+                  <div *ngIf="submitted && registerForm.controls.file.invalid" class="alert alert-danger">
+                    <div *ngIf="registerForm.controls.file.errors.required">
+                      Image is required.
+                    </div>
+                  </div>
                 </div>
                 <div class="form-group">
                   <div class="row">
-                    <div class="col-sm-6 col-sm-offset-3">
-                      <input  (click)="register()" type="submit" class="form-control btn btn-register" value="Register Now">
+                    <div class="col-sm-6 col-sm-offset-3" style="text-align:center;">
+                      <div *ngIf="loading" class="spinner-border" role="status"></div>
+                      <input *ngIf="!loading" (click)="register()" type="submit" class="form-control btn btn-register" value="Register Now">
+                      <div *ngIf="submitError" class="alert alert-danger">
+                        Error Creating a user : {{submitError}}
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -70,5 +120,5 @@
         </div>
       </div>
     </div>
-  </div>
-</body>
+  <!--</div>-->
+<!--</body>-->

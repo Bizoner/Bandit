@@ -17,6 +17,9 @@ export class NewBandComponent implements OnInit {
   description: String;
   members: String;
   genre: String;
+  submitted: Boolean;
+  submitError: String;
+  loading: Boolean;
 
   constructor(private http: HttpClient, private bandsService: BandsService, private _router:Router) {
   }
@@ -25,6 +28,10 @@ export class NewBandComponent implements OnInit {
   }
 
   public onSubmit() {
+    this.submitted = true;
+    if (!this.name || !this.genre || !this.file) {
+      return;
+    }
       const objReq = {
           name : this.name,
           description: this.description,
@@ -32,10 +39,12 @@ export class NewBandComponent implements OnInit {
           genre : this.genre,
           file : this.file,
       };
+      this.loading = true;
       this.bandsService.createNewBand(objReq).subscribe((data) => {
         this.goToPage(data);
       },(err) => {
-
+        this.loading = false;
+        this.submitError = err.error;
       });
   }
 

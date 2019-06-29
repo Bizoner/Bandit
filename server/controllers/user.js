@@ -16,7 +16,7 @@ function getUserData (req,res,next) {
 
 function addNewUser(req,res,next) {
     UsersModel.addNewUser(req.body,(err,user) => {
-        if (err) throw new Error(err);
+        if (err) return next('Emails Exists In System');
         BandsModel.registerPendingMember(user,(err,res) => {
             req.body.user = user.toObject();
             next();

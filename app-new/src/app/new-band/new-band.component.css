@@ -4,20 +4,17 @@
 form{
   width: 100%;
 }
-textarea{
-  width: 50%;
-}
 input{
   font-size:14px;
-  width: 50%;
+  width: 100%;
 }
 select{
-  width: 50%;
+  width: 100%;
 }
 
 label {
   font-size: 14px;
 }
 .custom-file-label{
-  width: 50%;
+  width: 100%;
 }

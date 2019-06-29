@@ -1,20 +1,39 @@
-<div class="col-xs-12">
+<!--<div class="col-xs-12">-->
+  <div class="col-md-6" style="margin:0 auto">
       <h1>Add New Band</h1>
       <form (ngSubmit)="onSubmit()">
-          <label> Band name: </label> <input type="text" [(ngModel)]="name" name="bandName"><br>
+        <div class="form-group">
+        <label> Band name: </label>
+        <input class="form-control" type="text" [(ngModel)]="name" name="bandName">
+        <div *ngIf="submitted && !name" class="alert alert-danger">
+          <div>Band name is required</div></div>
+        <br>
           <label> Genre: </label>
-            <select [(ngModel)]="genre" name="genre">
+            <select class="form-control" [(ngModel)]="genre" name="genre">
               <option> Rock </option>
               <option> Punk </option>
               <option> Jazz </option>
             </select><br>
+          <div *ngIf="submitted && !genre" class="alert alert-danger">
+            <div>Genre is required</div></div>
           <label> Description: </label>
-          <textarea [(ngModel)]="description" name="description"></textarea><br>
-        <label> Members Emails (seperated by comma): </label> <input type="text" [(ngModel)]="members" name="members"><br>
+          <textarea class="form-control" [(ngModel)]="description" name="description"></textarea><br>
+        <label> Members Emails (seperated by comma): </label>
+        <input type="text" class="form-control" [(ngModel)]="members" name="members"><br>
           <div class="custom-file mb-3">
             <input  (change)="onFileChange($event)" type="file" ngModel name="icon" class="custom-file-input">
-            <label for="file" class="custom-file-label"> Add band photo </label><br>
+            <label for="file" class="custom-file-label"> {{file && file.filename || "Add band photo"}} </label>
           </div><br>
-          <input type="submit" value="Submit" class="btn btn-primary">
+          <div *ngIf="submitted && !file" class="alert alert-danger">
+            <div>Band Image is required</div></div>
+          <br>
+          <input *ngIf="!loading" type="submit" value="Submit" class="btn btn-primary">
+          <div *ngIf="loading" class="spinner-border" role="status"></div>
+           <div *ngIf="submitError" class="alert alert-danger">
+            Create Band Error : {{submitError}}
+          </div>
+
+        </div>
       </form>
-</div>
+  </div>
+<!--</div>-->

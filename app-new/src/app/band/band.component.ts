@@ -4,6 +4,7 @@ import {HttpClient} from "@angular/common/http";
 import {ActivatedRoute, Router} from "@angular/router";
 import {BandsService} from "../bands.service";
 import {PlayerService} from "../player.service";
+import {RegisterService} from "../register.service";
 
 @Component({
   selector: 'app-band',
@@ -12,17 +13,22 @@ import {PlayerService} from "../player.service";
 })
 export class BandComponent implements OnInit {
 
+  loading: Boolean;
+  loadingError: String;
   bandData : Object = {};
   bandId : string;
 
-  constructor( private http: HttpClient, private route: ActivatedRoute, private router: Router ,private bandsService: BandsService, private playerService: PlayerService) {
+  constructor(private loginService: RegisterService, private http: HttpClient, private route: ActivatedRoute, private router: Router ,private bandsService: BandsService, private playerService: PlayerService) {
     this.route.params.subscribe(params => {
       this.bandId = params['id'];
     });
+    this.loading = true;
     this.bandsService.getBandData({id: this.bandId}).subscribe((data) => {
       this.bandData = data;
+      this.loading = false;
     },(err) => {
-      console.error(err);
+      this.loading = false;
+      this.loadingError = err.error;
     });
   }
 
@@ -35,7 +41,7 @@ export class BandComponent implements OnInit {
   }
 
   redirectToStudio(data) {
-    window.location.href = 'https://shenkar-band-it.herokuapp.com/songstudio/?id='+ data._id
+    window.location.href = 'http://localhost:3003/songstudio/?id='+ data._id
   }
 
   playSong(songId) {

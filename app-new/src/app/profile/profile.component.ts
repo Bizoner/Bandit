@@ -16,8 +16,6 @@ export class ProfileComponent implements OnInit {
   genre: String='';
   email: String='';
   userData : Observable<any>;
-
-
   imageUrl: string = "../../assets/userImg.png";
 
 
@@ -34,7 +32,7 @@ export class ProfileComponent implements OnInit {
       .subscribe(
         data => {
           this._user.updateUserSuccessObj({});
-          window.location.href = 'https://shenkar-band-it.herokuapp.com/'
+          window.location.href = 'http://localhost:3003/'
           },
         error => console.error(error)
       );
@@ -46,6 +44,7 @@ export class ProfileComponent implements OnInit {
     this.lastName = data.lastName;
     this.genre = data.genre;
     this.email = data.email;
+    this.imageUrl = data.icon;
   }
   ngOnInit() {
   }

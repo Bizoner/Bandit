@@ -6,8 +6,19 @@ var ChannelsModel = require('../models/channels').ChannelsModel;
 function getBandData (req,res,next) {
     if (!req.body.id) return next('missingid');
     BandsModel.getBandById(req.body.id,(err,band) => {
-        if (err || !band) return next('missinguser');
+        if (err || !band) return next('missingband');
         band = band.toObject();
+        if (req.user && req.user._id) {
+            if (band.adminId && (band.adminId.equals(req.user._id))) {
+                band.isAdmin = true;
+            } else {
+                band.members.forEach((member) => {
+                    if (member.equals(req.user._id)) {
+                        band.isMember = true;
+                    }
+                })
+            }
+        }
         UsersModel.getUsersByIds(band.members, (err, members) => {
             if (err) return next(err)
             band.members = members;
@@ -29,7 +40,7 @@ function createNewBand(req,res,next) {
                 emailArr.splice(emailArr.indexOf(regUser.email),1);
             });
             const objReq = {
-                managerId : req.user._id,
+                adminId : req.user._id,
                 members: [req.user._id].concat(regUsers.map(user => user._id)),
                 pendingMembers: emailArr,
                 name :req.body.name,
@@ -44,7 +55,7 @@ function createNewBand(req,res,next) {
         });
     } else {
         const objReq = {
-            managerId : req.user._id,
+            adminId : req.user._id,
             members: [req.user._id],
             pendingMembers: [],
             name :req.body.name,

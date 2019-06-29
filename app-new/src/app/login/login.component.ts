@@ -9,6 +9,9 @@ import {RegisterService} from "../register.service";
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+  loading: Boolean;
+  submitted: Boolean;
+  submitError: String;
   loginForm: FormGroup = new FormGroup({
     email: new FormControl( null , [Validators.email , Validators.required] ),
     pass: new FormControl( null, Validators.required)
@@ -16,16 +19,18 @@ export class LoginComponent implements OnInit {
   constructor( private _router:Router, private login_s:RegisterService ) {
   }
   login() {
+    this.submitted = true;
     if ( !this.loginForm.valid ) {
       console.log('Invalid Form');
       return;
     }
+    this.loading = true;
     this.login_s.login(JSON.stringify(this.loginForm.value))
       .subscribe(
         data=>{
           this.login_s.updateUserSuccessObj(data);
           this._router.navigate(['/index']);},
-        error=> console.error(error)
+        error=> {this.loading = false; this.submitError = error.error}
       )
   }
   ngOnInit() {

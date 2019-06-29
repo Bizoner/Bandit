@@ -24,7 +24,7 @@ class Studio extends Component {
             volume: 100,
             spacing: 8,
             runningTime: 0,
-            playing: true,
+            playing: false,
             playbackTime: 0,
             channelData: [],
             loading:true,
@@ -35,14 +35,17 @@ class Studio extends Component {
             context: new AudioContext(),
             key: 'Cmaj',
             timeSignature: '4/4',
-            deletedChannels: []
+            deletedChannels: [],
         };
         this.state.context.suspend();
         this.getImpulse();
-        axios.post('https://shenkar-band-it.herokuapp.com/studio/getDataForStudio',{id})
+        axios.post('http://localhost:3003/studio/getDataForStudio',{id})
             .then((res)=>{
+            setInterval(function() {
+                axios.post('http://localhost:3003/studio/checkAndLockSong',{songId:id});
+            }, 30000);
             res = res.data;
-            that.setState({channelData: res.channels, title: res.title, bpm: res.bpm, key: res.key, timeSignature: res.timeSignature, lastExportedUrl: res.lastExportedUrl});
+            that.setState({channelData: res.channels, title: res.title, bpm: res.bpm, key: res.key, timeSignature: res.timeSignature, lastExportedUrl: res.lastExportedUrl, isAdmin: res.isAdmin});
             console.log(this.state);
             let loadingCounter = 0;
             if (res.channels.length > 0) {
@@ -80,6 +83,7 @@ class Studio extends Component {
                 that.setState({loading: false});
             }
         }).catch((err) => {
+            console.log(err);
             window.alert(err);
         });
 
@@ -136,6 +140,8 @@ class Studio extends Component {
     }
 
     playAll = (recording) => {
+        console.log('here',this.state.playing);
+        if (this.state.playing) return;
         let channelData = this.state.channelData;
         const that = this;
         this.state.context.resume();
@@ -165,7 +171,7 @@ class Studio extends Component {
                             channel.gainNode.disconnect(that.state.context.destination);
                         }
                     }
-                    this.setState({channelData});
+                    this.setState({channelData,playing:true});
                     return mainGain;
                 })
             } else {
@@ -185,11 +191,13 @@ class Studio extends Component {
         });
     };
     pauseAll = () => {
+        console.log('pauseAll');
         clearInterval(this.timer);
         this.state.context.suspend();
-        this.setState({status: false, suspended: true });
+        this.setState({status: false, suspended: true, playing:false});
     };
     stopAll = () => {
+        console.log('stopAll')
         clearInterval(this.timer); // new
         const that = this;
         this.state.context.suspend();
@@ -199,7 +207,7 @@ class Studio extends Component {
             });
         });
 
-        this.setState({runningTime: 0, status: false, suspended: false});
+        this.setState({runningTime: 0, status: false, suspended: false,playing:false});
     };
 
     handleDrag = (e,data) => {
@@ -300,7 +308,7 @@ class Studio extends Component {
         formData.append('timeSignature',this.state.timeSignature);
         formData.append('key',this.state.key);
         formData.append('length',this.state.length);
-        axios.post('https://shenkar-band-it.herokuapp.com/studio/saveDataInStudio',formData).then((res)=>{
+        axios.post('http://localhost:3003/studio/saveDataInStudio',formData).then((res)=>{
             window.alert('Song Saved!');
             this.setState({loading:false})
         })
@@ -327,7 +335,7 @@ class Studio extends Component {
         const formData = new FormData();
         formData.append('export',file);
         formData.append('songId',this.state.songId);
-        axios.post('https://shenkar-band-it.herokuapp.com/studio/exportSong',formData).then((res)=>{
+        axios.post('http://localhost:3003/studio/exportSong',formData).then((res)=>{
             if (res.data.lastExportedUrl) {
                 this.setState({lastExportedUrl:res.data.lastExportedUrl});
             }
@@ -357,7 +365,7 @@ class Studio extends Component {
         let masterNode = audioCtx.createGain();
         let distortionGainNode = audioCtx.createGain();
         let distortionNode = audioCtx.createWaveShaper();
-        distortionNode.curve = makeDistortionCurve(200);
+        distortionNode.curve = makeDistortionCurve(800);
         stream.connect(distortionNode);
         distortionNode.connect(distortionGainNode);
         distortionGainNode.gain.value = value;
@@ -471,6 +479,18 @@ class Studio extends Component {
         this.setState({channelData,deletedChannels});
     }
 
+    changeChannelImage(key) {
+        let channelData = this.state.channelData;
+        let instruments = ['guitar','vocal','bass','drums','audio'];
+        let indexOf = instruments.indexOf(channelData[key].instrument);
+        if (indexOf === (instruments.length - 1)) {
+            channelData[key].instrument = instruments[0];
+        } else {
+            channelData[key].instrument = instruments[indexOf+1];
+        }
+        this.setState(channelData);
+    }
+
     render() {
         return (
             <div>
@@ -538,9 +558,10 @@ class Studio extends Component {
                         <Button className={"controlButton"}>
                             <FontAwesomeIcon style={{"marginRight": '10px'}} icon={faSave} onClick={this.saveSong.bind(this)}/> Save
                         </Button>
+                        {this.state.isAdmin ?
                         <Button className={"controlButton"}>
                             <FontAwesomeIcon style={{"marginRight": '10px'}} icon={faFileExport} onClick={() => {this.downloadLink()}}/> Export
-                        </Button>
+                        </Button> : ''}
                         {this.state.lastExportedUrl ?
                         <Button className={"controlButton"}>
                             <a style={{color:'inherit', textDecoration:'none'}} href={this.state.lastExportedUrl} download>
@@ -558,7 +579,7 @@ class Studio extends Component {
                                 </div>
                                 {(!channel.tab || channel.tab === 0) &&
                                     <div key={channel._id} className="channel">
-                                        <img src={InstrumentImgs[channel.instrument] || InstrumentImgs.audio}/>
+                                        <img onClick={() => {this.changeChannelImage(key)}} src={InstrumentImgs[channel.instrument] || InstrumentImgs.audio}/>
                                         <div className="channel-details">
                                             <p>
                                                 <EditableLabel text={channel.title}
@@ -567,7 +588,8 @@ class Studio extends Component {
                                                                inputWidth='300px'
                                                                onFocusOut={(text)=>{this.editChannelLabel(text,key)}}
                                                 />
-                                                {channel.audioFiles.length === 0 ? <input className="fileUpload" type='file' id={'upload-ch-'+key} onChange={this.onUpload} /> : ''}
+                                                {/*{channel.audioFiles.length === 0 ? <input className="fileUpload" type='file' id={'upload-ch-'+key} onChange={this.onUpload} /> : ''}*/}
+                                                <input className="fileUpload" type='file' id={'upload-ch-'+key} onChange={this.onUpload} />
                                                 </p>
                                             <FontAwesomeIcon onClick={(e)=>{this.changeVolume(e,0,key)}} icon={faVolumeMute}/>
                                             <FontAwesomeIcon icon={faHeadphones}/>
