@@ -32,7 +32,7 @@ export class ProfileComponent implements OnInit {
       .subscribe(
         data => {
           this._user.updateUserSuccessObj({});
-          window.location.href = 'http://localhost:3003/'
+          window.location.href = 'https://shenkar-band-it.herokuapp.com/'
           },
         error => console.error(error)
       );

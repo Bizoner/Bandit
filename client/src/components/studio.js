@@ -39,10 +39,10 @@ class Studio extends Component {
         };
         this.state.context.suspend();
         this.getImpulse();
-        axios.post('http://localhost:3003/studio/getDataForStudio',{id})
+        axios.post('https://shenkar-band-it.herokuapp.com/studio/getDataForStudio',{id})
             .then((res)=>{
             setInterval(function() {
-                axios.post('http://localhost:3003/studio/checkAndLockSong',{songId:id});
+                axios.post('https://shenkar-band-it.herokuapp.com/studio/checkAndLockSong',{songId:id});
             }, 30000);
             res = res.data;
             that.setState({channelData: res.channels, title: res.title, bpm: res.bpm, key: res.key, timeSignature: res.timeSignature, lastExportedUrl: res.lastExportedUrl, isAdmin: res.isAdmin});
@@ -308,7 +308,7 @@ class Studio extends Component {
         formData.append('timeSignature',this.state.timeSignature);
         formData.append('key',this.state.key);
         formData.append('length',this.state.length);
-        axios.post('http://localhost:3003/studio/saveDataInStudio',formData).then((res)=>{
+        axios.post('https://shenkar-band-it.herokuapp.com/studio/saveDataInStudio',formData).then((res)=>{
             window.alert('Song Saved!');
             this.setState({loading:false})
         })
@@ -335,7 +335,7 @@ class Studio extends Component {
         const formData = new FormData();
         formData.append('export',file);
         formData.append('songId',this.state.songId);
-        axios.post('http://localhost:3003/studio/exportSong',formData).then((res)=>{
+        axios.post('https://shenkar-band-it.herokuapp.com/studio/exportSong',formData).then((res)=>{
             if (res.data.lastExportedUrl) {
                 this.setState({lastExportedUrl:res.data.lastExportedUrl});
             }

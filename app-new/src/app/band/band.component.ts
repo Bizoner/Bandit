@@ -41,7 +41,7 @@ export class BandComponent implements OnInit {
   }
 
   redirectToStudio(data) {
-    window.location.href = 'http://localhost:3003/songstudio/?id='+ data._id
+    window.location.href = 'https://shenkar-band-it.herokuapp.com/songstudio/?id='+ data._id
   }
 
   playSong(songId) {

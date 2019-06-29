@@ -326,7 +326,7 @@ var BandComponent = /** @class */ (function () {
         });
     };
     BandComponent.prototype.redirectToStudio = function (data) {
-        window.location.href = 'http://localhost:3003/songstudio/?id=' + data._id;
+        window.location.href = 'https://shenkar-band-it.herokuapp.com/songstudio/?id=' + data._id;
     };
     BandComponent.prototype.playSong = function (songId) {
         var audioObj = {
@@ -372,54 +372,54 @@ var BandsService = /** @class */ (function () {
         this.http = http;
     }
     BandsService.prototype.updateBand = function (body) {
-        return this.http.post('http://localhost:3003/band/updateBand', body, {
+        return this.http.post('https://shenkar-band-it.herokuapp.com/band/updateBand', body, {
             observe: 'body',
             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]().append('Content-Type', 'application/json')
         });
     };
     BandsService.prototype.getSongUrl = function (body) {
-        return this.http.post('http://localhost:3003/bands/getSongUrl', body, {
+        return this.http.post('https://shenkar-band-it.herokuapp.com/bands/getSongUrl', body, {
             observe: 'body',
             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]().append('Content-Type', 'application/json')
         });
     };
     BandsService.prototype.favoriteSong = function (body) {
-        return this.http.post('http://localhost:3003/bands/favoriteSong', body, {
+        return this.http.post('https://shenkar-band-it.herokuapp.com/bands/favoriteSong', body, {
             observe: 'body',
             withCredentials: true,
             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]().append('Content-Type', 'application/json')
         });
     };
     BandsService.prototype.getFavorites = function () {
-        return this.http.get('http://localhost:3003/bands/getFavorites', {
+        return this.http.get('https://shenkar-band-it.herokuapp.com/bands/getFavorites', {
             observe: 'body',
             withCredentials: true,
             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]().append('Content-Type', 'application/json')
         });
     };
     BandsService.prototype.createNewBand = function (body) {
-        return this.http.post('http://localhost:3003/bands/createNewBand', body, {
+        return this.http.post('https://shenkar-band-it.herokuapp.com/bands/createNewBand', body, {
             observe: 'body',
             withCredentials: true,
             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]().append('Content-Type', 'application/json')
         });
     };
     BandsService.prototype.createNewSong = function (body) {
-        return this.http.post('http://localhost:3003/bands/createNewSong', body, {
+        return this.http.post('https://shenkar-band-it.herokuapp.com/bands/createNewSong', body, {
             observe: 'body',
             withCredentials: true,
             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]().append('Content-Type', 'application/json')
         });
     };
     BandsService.prototype.getBandData = function (body) {
-        return this.http.post('http://localhost:3003/bands/getBandData', body, {
+        return this.http.post('https://shenkar-band-it.herokuapp.com/bands/getBandData', body, {
             observe: 'body',
             withCredentials: true,
             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]().append('Content-Type', 'application/json')
         });
     };
     BandsService.prototype.getAllSongs = function () {
-        return this.http.post('http://localhost:3003/bands/getAllSongs', {}, {
+        return this.http.post('https://shenkar-band-it.herokuapp.com/bands/getAllSongs', {}, {
             observe: 'body',
             withCredentials: true,
             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]().append('Content-Type', 'application/json')
@@ -554,7 +554,7 @@ var EditBandComponent = /** @class */ (function () {
         this.route.params.subscribe(function (params) {
             _this.id = params['id'];
         });
-        var req = this.http.post("http://localhost:3003/bands/getBandData", { id: this.id });
+        var req = this.http.post("https://shenkar-band-it.herokuapp.com/bands/getBandData", { id: this.id });
         req.subscribe(function (data) {
             _this.bandData = data;
             console.log('The edit Bands data: ' + JSON.stringify(_this.bandData));
@@ -868,7 +868,7 @@ var IndexService = /** @class */ (function () {
         this.http = http;
     }
     IndexService.prototype.getIndexData = function () {
-        return this.http.get('http://localhost:3003/index/getIndexData', {
+        return this.http.get('https://shenkar-band-it.herokuapp.com/index/getIndexData', {
             observe: 'body',
             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]().append('Content-Type', 'application/json')
         });
@@ -1385,7 +1385,7 @@ var ProfileComponent = /** @class */ (function () {
         this._user.logout()
             .subscribe(function (data) {
             _this._user.updateUserSuccessObj({});
-            window.location.href = 'http://localhost:3003/';
+            window.location.href = 'https://shenkar-band-it.herokuapp.com/';
         }, function (error) { return console.error(error); });
     };
     ProfileComponent.prototype.addDetails = function (data) {
@@ -1450,34 +1450,34 @@ var RegisterService = /** @class */ (function () {
         return this.userData;
     };
     RegisterService.prototype.logout = function () {
-        return this.http.get('http://localhost:3003/users/logout', {
+        return this.http.get('https://shenkar-band-it.herokuapp.com/users/logout', {
             observe: 'body',
             withCredentials: true,
             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]().append('Content-Type', 'application/json')
         });
     };
     RegisterService.prototype.register = function (body) {
-        return this.http.post('http://localhost:3003/users/register', body, {
+        return this.http.post('https://shenkar-band-it.herokuapp.com/users/register', body, {
             observe: 'body',
             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]().append('Content-Type', 'application/json')
         });
     };
     RegisterService.prototype.updateUser = function (body) {
         console.log('hi from service');
-        return this.http.post('http://localhost:3003/user/updateUser', body, {
+        return this.http.post('https://shenkar-band-it.herokuapp.com/user/updateUser', body, {
             observe: 'body',
             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]().append('Content-Type', 'application/json')
         });
     };
     RegisterService.prototype.login = function (body) {
-        return this.http.post('http://localhost:3003/users/login', body, {
+        return this.http.post('https://shenkar-band-it.herokuapp.com/users/login', body, {
             observe: 'body',
             withCredentials: true,
             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]().append('Content-Type', 'application/json')
         });
     };
     RegisterService.prototype.user = function () {
-        return this.http.get('http://localhost:3003/users/getUserData', {
+        return this.http.get('https://shenkar-band-it.herokuapp.com/users/getUserData', {
             observe: 'body',
             withCredentials: true,
             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]().append('Content-Type', 'application/json')
