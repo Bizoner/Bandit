@@ -5,9 +5,6 @@
   <div *ngFor="let feature of featured;" class="col-xs-3 hov-container">
     <a (click)="playSong(feature.songId)">
     <img class="sub-featured" src="{{feature.imgUrl}}">
-      <div class="playButton">
-        <span class="glyphicon glyphicon-play"></span>
-      </div>
     </a>
   </div>
 </div>

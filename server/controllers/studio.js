@@ -8,7 +8,7 @@ function getDataForStudio(req,res,next) {
     if (!req.body.id) return next('missingId');
     if (!req.user || !req.user._id) return next('missingUser');
     CacheModel.getOrCreateSongLock({songId:req.body.id,userId:req.user._id},(err) => {
-        if (err) return next('songlocked');
+        // if (err) return next('songlocked');
         SongsModel.getSongById(req.body.id,(err,song)=>{
             if (err || !song) return next('noSong');
             song = song.toObject();
@@ -82,7 +82,7 @@ function checkAndLock(req,res,next) {
     if (!req.user._id) return next('missingUser');
     if (!req.body.songId) return next('missingId');
     CacheModel.getOrCreateSongLock({userId: req.user._id, songId: req.body.songId},(err) => {
-        if (err) return next('songlocked');
+        // if (err) return next('songlocked');
         res.json({success:true});
     })
 }
