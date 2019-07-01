@@ -164,7 +164,9 @@ body {
 }
 
 .fileUpload {
-    float:right;
+    float: right;
+    width: 80px;
+    margin-right: 10px;
 }
 
 .songTitle {
