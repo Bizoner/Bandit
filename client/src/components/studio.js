@@ -589,13 +589,7 @@ class Studio extends Component {
                                                                onFocusOut={(text)=>{this.editChannelLabel(text,key)}}
                                                 />
                                                 {/*{channel.audioFiles.length === 0 ? <input className="fileUpload" type='file' id={'upload-ch-'+key} onChange={this.onUpload} /> : ''}*/}
-                                                {/*<input className="fileUpload" type='file' id={'upload-ch-'+key} onChange={this.onUpload} />*/}
-
-                                                <label htmlFor="file-upload" className="custom-file-upload">
-                                                    <FontAwesomeIcon icon={faPlus}/>
-                                                </label>
-                                                <input className="fileUpload" type='file' id={'upload-ch-'+key} onChange={this.onUpload}/>
-
+                                                <input className="fileUpload" type='file' id={'upload-ch-'+key} onChange={this.onUpload} />
                                                 </p>
                                             <FontAwesomeIcon onClick={(e)=>{this.changeVolume(e,0,key)}} icon={faVolumeMute}/>
                                             <FontAwesomeIcon icon={faHeadphones}/>
