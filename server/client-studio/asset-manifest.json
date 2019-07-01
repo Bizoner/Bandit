@@ -1,13 +1,13 @@
 {
-  "main.css": "/songstudio/static/css/main.5f1099cb.chunk.css",
-  "main.js": "/songstudio/static/js/main.22968d24.chunk.js",
-  "main.js.map": "/songstudio/static/js/main.22968d24.chunk.js.map",
+  "main.css": "/songstudio/static/css/main.30759fc5.chunk.css",
+  "main.js": "/songstudio/static/js/main.371a1bd0.chunk.js",
+  "main.js.map": "/songstudio/static/js/main.371a1bd0.chunk.js.map",
   "runtime~main.js": "/songstudio/static/js/runtime~main.f3094517.js",
   "runtime~main.js.map": "/songstudio/static/js/runtime~main.f3094517.js.map",
   "static/js/2.e24a84a8.chunk.js": "/songstudio/static/js/2.e24a84a8.chunk.js",
   "static/js/2.e24a84a8.chunk.js.map": "/songstudio/static/js/2.e24a84a8.chunk.js.map",
   "index.html": "/songstudio/index.html",
-  "precache-manifest.1cd6d6bb72dce3824ad5988a4a5aeeec.js": "/songstudio/precache-manifest.1cd6d6bb72dce3824ad5988a4a5aeeec.js",
+  "precache-manifest.9c3210ee64735bef942ef39421346bbe.js": "/songstudio/precache-manifest.9c3210ee64735bef942ef39421346bbe.js",
   "service-worker.js": "/songstudio/service-worker.js",
-  "static/css/main.5f1099cb.chunk.css.map": "/songstudio/static/css/main.5f1099cb.chunk.css.map"
+  "static/css/main.30759fc5.chunk.css.map": "/songstudio/static/css/main.30759fc5.chunk.css.map"
 }
