@@ -558,10 +558,9 @@ class Studio extends Component {
                         <Button className={"controlButton"}>
                             <FontAwesomeIcon style={{"marginRight": '10px'}} icon={faSave} onClick={this.saveSong.bind(this)}/> Save
                         </Button>
-                        {this.state.isAdmin ?
                         <Button className={"controlButton"}>
                             <FontAwesomeIcon style={{"marginRight": '10px'}} icon={faFileExport} onClick={() => {this.downloadLink()}}/> Export
-                        </Button> : ''}
+                        </Button>
                         {this.state.lastExportedUrl ?
                         <Button className={"controlButton"}>
                             <a style={{color:'inherit', textDecoration:'none'}} href={this.state.lastExportedUrl} download>

@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/songstudio/precache-manifest.d3bbc72f510299b4fcf2586128874b95.js"
+  "/songstudio/precache-manifest.0a6f61cb6000d574d374e8383c4d0c99.js"
 );
 
 workbox.clientsClaim();
