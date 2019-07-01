@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import '../App.css';
 import Button from '@material-ui/core/Button'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faMagic,faStepBackward,faCloudDownloadAlt,faFileExport, faPlay,faStop,faMusic,faVolumeMute, faHeadphones,faPause,faPlus,faWindowClose,faSave } from '@fortawesome/free-solid-svg-icons'
+import { faPlusCircle,faMagic,faStepBackward,faCloudDownloadAlt,faFileExport, faPlay,faStop,faMusic,faVolumeMute, faHeadphones,faPause,faPlus,faWindowClose,faSave } from '@fortawesome/free-solid-svg-icons'
 import Slider from '@material-ui/lab/Slider';
 import BufferLoader from '../scripts/BufferLoader'
 import Draggable from 'react-draggable';
@@ -589,7 +589,13 @@ class Studio extends Component {
                                                                onFocusOut={(text)=>{this.editChannelLabel(text,key)}}
                                                 />
                                                 {/*{channel.audioFiles.length === 0 ? <input className="fileUpload" type='file' id={'upload-ch-'+key} onChange={this.onUpload} /> : ''}*/}
-                                                <input className="fileUpload" type='file' id={'upload-ch-'+key} onChange={this.onUpload} />
+                                                {/*<input className="fileUpload" type='file' id={'upload-ch-'+key} onChange={this.onUpload} />*/}
+
+                                                <label htmlFor="file-upload" className="custom-file-upload">
+                                                    <FontAwesomeIcon icon={faPlus}/>
+                                                </label>
+                                                <input className="fileUpload" type='file' id={'upload-ch-'+key} onChange={this.onUpload}/>
+
                                                 </p>
                                             <FontAwesomeIcon onClick={(e)=>{this.changeVolume(e,0,key)}} icon={faVolumeMute}/>
                                             <FontAwesomeIcon icon={faHeadphones}/>

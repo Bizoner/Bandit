@@ -163,8 +163,14 @@ body {
     margin:0 !important;
 }
 
+input[type="file"] {
+    display: none;
+}
 .fileUpload {
-    float: right;
+    font-size:15px;
+    float:right;
+    display: inline-block;
+    cursor: pointer;
 }
 
 .songTitle {
