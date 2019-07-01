@@ -5,7 +5,7 @@
     <li *ngIf="isLoggedIn"> <span class="glyphicon glyphicon-signal"></span> <a routerLink="/studio" >MY STUDIO</a> </li>
     <li *ngIf="isLoggedIn"> <span class="glyphicon glyphicon-heart-empty"></span> <a routerLink="/favoriets" >FAVORITES</a> </li>
 
-    <li class="line" > <span class="glyphicon glyphicon-music"></span> <a routerLink="/board" >THE BOARD</a> </li>
+    <!--<li class="line" > <span class="glyphicon glyphicon-music"></span> <a routerLink="/board" >THE BOARD</a> </li>-->
     <li *ngFor="let band of bands" style="color:white;">
       <a routerLink="{{'/band/'+band._id}}">
         <img [src]="band.icon" style="width: 30px;margin-right: 5px;">
